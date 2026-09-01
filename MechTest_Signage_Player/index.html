@@ -3,321 +3,864 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>MechTest Digital Signage</title>
+
 <style>
-* { box-sizing:border-box; }
-html,body {
-  margin:0;
-  width:100%;
-  height:100%;
-  font-family:Arial,Helvetica,sans-serif;
-  overflow:hidden;
-  background:#07121f;
+
+* {
+  box-sizing: border-box;
 }
-.stage { position:relative; width:100vw; height:100vh; }
-.scene { position:absolute; inset:0; display:none; }
-.scene.active { display:block; }
-video { width:100%; height:100%; object-fit:contain; background:#000; }
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  background: #07121f;
+}
+
+/* =========================================================
+   MAIN SIGNAGE LAYOUT
+========================================================= */
+
+.stage {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #07121f;
+}
+
+
+/* =========================================================
+   VIDEO AREA
+========================================================= */
+
+#videoArea {
+  width: 100%;
+  height: 65vh;
+
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+#signageVideo {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  background: #000;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 #dashboard {
-  background:linear-gradient(135deg,#f8fbff,#eef4fb);
-  color:#102642;
-  padding:4vh 4vw;
+  width: 100%;
+  height: 35vh;
+
+  background: linear-gradient(
+    135deg,
+    #f8fbff,
+    #eef4fb
+  );
+
+  color: #102642;
+
+  padding: 1.2vh 2vw;
+
+  overflow: hidden;
 }
+
+
+/* =========================================================
+   DASHBOARD HEADER
+========================================================= */
+
 .top {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:4vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 1vh;
 }
+
 .title {
-  font-size:3.2vw;
-  font-weight:800;
-  letter-spacing:.02em;
+  font-size: 1.7vw;
+  font-weight: 800;
+  letter-spacing: .02em;
 }
+
 .sub {
-  font-size:1.15vw;
-  color:#5c6f85;
+  font-size: .8vw;
+  color: #5c6f85;
 }
+
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
 .grid {
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:1.4vw;
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 1vw;
 }
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
 .card {
-  background:white;
-  border-radius:1.2vw;
-  padding:2vw 1.2vw;
-  text-align:center;
-  box-shadow:0 12px 30px rgba(18,45,75,.10);
+  background: white;
+
+  border-radius: .8vw;
+
+  padding: .8vw .6vw;
+
+  text-align: center;
+
+  box-shadow:
+    0 6px 16px rgba(18,45,75,.10);
 }
+
 .label {
-  font-size:1.15vw;
-  font-weight:700;
-  min-height:3.2em;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  font-size: .8vw;
+  font-weight: 700;
+
+  min-height: 2.5em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .value {
-  font-size:3.2vw;
-  font-weight:800;
-  margin:1vw 0;
-  color:#159447;
+  font-size: 1.7vw;
+  font-weight: 800;
+
+  margin: .3vw 0;
+
+  color: #159447;
 }
+
+
+/* =========================================================
+   PROGRESS RING
+========================================================= */
+
 .ring {
-  --p:0;
-  width:8vw;
-  height:8vw;
-  border-radius:50%;
-  margin:0 auto 1.2vw;
-  background:conic-gradient(#22b455 calc(var(--p)*1%),#e4ebf1 0);
-  position:relative;
+  --p: 0;
+
+  width: 4vw;
+  height: 4vw;
+
+  border-radius: 50%;
+
+  margin: 0 auto .3vw;
+
+  background:
+    conic-gradient(
+      #22b455 calc(var(--p) * 1%),
+      #e4ebf1 0
+    );
+
+  position: relative;
 }
+
 .ring:after {
-  content:"";
-  position:absolute;
-  inset:1.05vw;
-  border-radius:50%;
-  background:#fff;
+  content: "";
+
+  position: absolute;
+
+  inset: .55vw;
+
+  border-radius: 50%;
+
+  background: #fff;
 }
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
 .foot {
-  margin-top:4vh;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:#607489;
-  font-size:1vw;
+  margin-top: .8vh;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #607489;
+
+  font-size: .7vw;
 }
+
 .status {
-  display:flex;
-  align-items:center;
-  gap:.6vw;
+  display: flex;
+  align-items: center;
+
+  gap: .4vw;
 }
+
 .dot {
-  width:.65vw;
-  height:.65vw;
-  border-radius:50%;
-  background:#25b05b;
+  width: .45vw;
+  height: .45vw;
+
+  border-radius: 50%;
+
+  background: #25b05b;
 }
-#error { color:#b42318; }
+
+#error {
+  color: #b42318;
+}
+
 </style>
+
 </head>
 
+
 <body>
+
 <div class="stage">
-  <div id="ad1" class="scene active">
-    <video id="video1" src="media/ad1.mp4" muted playsinline></video>
+
+
+  <!-- =====================================================
+       VIDEO ADS
+  ====================================================== -->
+
+  <div id="videoArea">
+
+    <video
+      id="signageVideo"
+      autoplay
+      muted
+      playsinline
+      preload="auto">
+    </video>
+
   </div>
 
-  <div id="ad2" class="scene">
-    <video id="video2" src="media/ad2.mp4" muted playsinline></video>
-  </div>
 
-  <section id="dashboard" class="scene">
+  <!-- =====================================================
+       SALES DASHBOARD
+  ====================================================== -->
+
+  <section id="dashboard">
+
     <div class="top">
+
       <div>
-        <div class="title">SALES PROGRESS DASHBOARD</div>
-        <div class="sub">Live percentages from Google Sheets</div>
+
+        <div class="title">
+          SALES PROGRESS DASHBOARD
+        </div>
+
+        <div class="sub">
+          Live percentages from Google Sheets
+        </div>
+
       </div>
-      <div class="sub">MECHTEST</div>
+
+      <div class="sub">
+        MECHTEST
+      </div>
+
     </div>
 
-    <div class="grid" id="cards"></div>
+
+    <div
+      class="grid"
+      id="cards">
+    </div>
+
 
     <div class="foot">
+
       <div class="status">
+
         <span class="dot"></span>
-        <span id="sync">Connecting to Google Sheets...</span>
+
+        <span id="sync">
+          Connecting to Google Sheets...
+        </span>
+
       </div>
+
+
       <div id="clock"></div>
+
     </div>
+
   </section>
+
+
 </div>
 
+
 <script>
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSgYkO7VW6kAjGgYS8BfIprjsD8l82rbrkaBNUxzmHiNftLWBScM513EsZTy6lV7L9fpFA_nj9Zpfsl/pub?gid=738983995&single=true&output=csv";
+
+
+/* =========================================================
+   GOOGLE SHEETS
+========================================================= */
+
+const CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSgYkO7VW6kAjGgYS8BfIprjsD8l82rbrkaBNUxzmHiNftLWBScM513EsZTy6lV7L9fpFA_nj9Zpfsl/pub?gid=738983995&single=true&output=csv";
+
+
 const REFRESH_MS = 30000;
-const DASHBOARD_MS = 60000;
+
+
+/* =========================================================
+   DEFAULT DASHBOARD DATA
+========================================================= */
 
 const defaults = [
+
   ["Monthly Target", 60],
+
   ["Quarterly Target", 80],
+
   ["Annual Target", 60],
+
   ["Quarterly Bonus", 60],
+
   ["Annual Bonus", 80]
+
 ];
+
 
 let data = defaults.slice();
 
-const scenes = ["ad1","ad2","dashboard"];
-const video1 = document.getElementById("video1");
-const video2 = document.getElementById("video2");
 
-function showScene(id) {
-  scenes.forEach(sceneId => {
-    document.getElementById(sceneId).classList.toggle("active", sceneId === id);
-  });
-}
 
-function renderDashboard() {
-  const cards = document.getElementById("cards");
-  cards.innerHTML = "";
+/* =========================================================
+   VIDEO PLAYLIST
+========================================================= */
 
-  data.forEach(([label, pct]) => {
-    pct = Math.max(0, Math.min(100, Number(pct) || 0));
+const signagePlaylist = [
 
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <div class="label">${label}</div>
-      <div class="value">${pct}%</div>
-      <div class="ring" style="--p:${pct}"></div>
-      <div class="sub">Progress</div>
-    `;
-    cards.appendChild(card);
-  });
-}
+  "https://drive.google.com/uc?export=download&id=1j_WEm9B-TmqZflvxsYb_zb8phV5357fO",
 
-function parseCSVLine(line) {
-  const values = [];
-  let current = "";
-  let quoted = false;
+  "https://drive.google.com/uc?export=download&id=1pEC_U1dfsOYY0dqkFZ32MkEKUEc4oV55"
 
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
+];
 
-    if (char === '"') {
-      if (quoted && line[i + 1] === '"') {
-        current += '"';
-        i++;
-      } else {
-        quoted = !quoted;
-      }
-    } else if (char === "," && !quoted) {
-      values.push(current);
-      current = "";
-    } else {
-      current += char;
-    }
-  }
 
-  values.push(current);
-  return values;
-}
+let currentVideoIndex = 0;
 
-async function loadSheet() {
-  const sync = document.getElementById("sync");
 
-  try {
-    sync.textContent = "Syncing Google Sheets...";
+const signageVideo =
+  document.getElementById("signageVideo");
 
-    const requestUrl = CSV_URL + "&_=" + Date.now();
 
-    const response = await fetch(requestUrl, {
-      method: "GET",
-      cache: "no-store"
+
+/* =========================================================
+   PLAY CURRENT AD
+========================================================= */
+
+function playCurrentAd() {
+
+  signageVideo.src =
+    signagePlaylist[currentVideoIndex];
+
+  signageVideo.load();
+
+
+  signageVideo
+    .play()
+    .catch(error => {
+
+      console.error(
+        "Video autoplay error:",
+        error
+      );
+
     });
 
-    if (!response.ok) {
-      throw new Error("HTTP " + response.status);
+}
+
+
+
+/* =========================================================
+   NEXT AD
+========================================================= */
+
+function playNextAd() {
+
+  currentVideoIndex++;
+
+
+  if (
+    currentVideoIndex >=
+    signagePlaylist.length
+  ) {
+
+    currentVideoIndex = 0;
+
+  }
+
+
+  playCurrentAd();
+
+}
+
+
+
+/* =========================================================
+   VIDEO EVENTS
+========================================================= */
+
+signageVideo.addEventListener(
+  "ended",
+  playNextAd
+);
+
+
+signageVideo.addEventListener(
+  "error",
+  function () {
+
+    console.warn(
+      "Video failed to load:",
+      signagePlaylist[currentVideoIndex]
+    );
+
+
+    setTimeout(
+      playNextAd,
+      3000
+    );
+
+  }
+);
+
+
+
+/* =========================================================
+   DASHBOARD RENDER
+========================================================= */
+
+function renderDashboard() {
+
+  const cards =
+    document.getElementById("cards");
+
+
+  cards.innerHTML = "";
+
+
+  data.forEach(
+    ([label, pct]) => {
+
+      pct =
+        Math.max(
+          0,
+          Math.min(
+            100,
+            Number(pct) || 0
+          )
+        );
+
+
+      const card =
+        document.createElement("div");
+
+
+      card.className = "card";
+
+
+      card.innerHTML = `
+
+        <div class="label">
+          ${label}
+        </div>
+
+        <div class="value">
+          ${pct}%
+        </div>
+
+        <div
+          class="ring"
+          style="--p:${pct}">
+        </div>
+
+        <div class="sub">
+          Progress
+        </div>
+
+      `;
+
+
+      cards.appendChild(card);
+
+    }
+  );
+
+}
+
+
+
+/* =========================================================
+   CSV PARSER
+========================================================= */
+
+function parseCSVLine(line) {
+
+  const values = [];
+
+  let current = "";
+
+  let quoted = false;
+
+
+  for (
+    let i = 0;
+    i < line.length;
+    i++
+  ) {
+
+    const char =
+      line[i];
+
+
+    if (
+      char === '"'
+    ) {
+
+      if (
+        quoted &&
+        line[i + 1] === '"'
+      ) {
+
+        current += '"';
+
+        i++;
+
+      } else {
+
+        quoted =
+          !quoted;
+
+      }
+
+    } else if (
+      char === "," &&
+      !quoted
+    ) {
+
+      values.push(current);
+
+      current = "";
+
+    } else {
+
+      current += char;
+
     }
 
-    const csvText = await response.text();
+  }
 
-    const rows = csvText
-      .replace(/^\uFEFF/, "")
-      .split(/\r?\n/)
-      .filter(Boolean)
-      .map(parseCSVLine);
 
-    const expected = new Map(
-      defaults.map(([name]) => [name.toLowerCase(), name])
-    );
+  values.push(current);
+
+
+  return values;
+
+}
+
+
+
+/* =========================================================
+   LOAD GOOGLE SHEET
+========================================================= */
+
+async function loadSheet() {
+
+  const sync =
+    document.getElementById("sync");
+
+
+  try {
+
+    sync.textContent =
+      "Syncing Google Sheets...";
+
+
+    const requestUrl =
+      CSV_URL +
+      "&_=" +
+      Date.now();
+
+
+    const response =
+      await fetch(
+        requestUrl,
+        {
+          method: "GET",
+          cache: "no-store"
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
+
+
+    const csvText =
+      await response.text();
+
+
+    const rows =
+      csvText
+
+        .replace(
+          /^\uFEFF/,
+          ""
+        )
+
+        .split(
+          /\r?\n/
+        )
+
+        .filter(Boolean)
+
+        .map(
+          parseCSVLine
+        );
+
+
+    const expected =
+      new Map(
+
+        defaults.map(
+          ([name]) => [
+            name.toLowerCase(),
+            name
+          ]
+        )
+
+      );
+
 
     const newData = [];
 
-    for (const row of rows) {
-      if (row.length < 2) continue;
 
-      const label = String(row[0] || "").trim();
-      const key = label.toLowerCase();
+    for (
+      const row of rows
+    ) {
 
-      if (!expected.has(key)) continue;
+      if (
+        row.length < 2
+      ) {
 
-      let raw = String(row[1] || "")
-        .trim()
-        .replace("%", "")
-        .trim();
+        continue;
 
-      let value = parseFloat(raw);
-
-      if (Number.isNaN(value)) continue;
-
-      // Google Sheets may output 70% as either 70% or 0.7.
-      if (value > 0 && value <= 1) {
-        value = value * 100;
       }
 
-      value = Math.round(value * 100) / 100;
 
-      newData.push([expected.get(key), value]);
+      const label =
+        String(
+          row[0] || ""
+        )
+        .trim();
+
+
+      const key =
+        label.toLowerCase();
+
+
+      if (
+        !expected.has(key)
+      ) {
+
+        continue;
+
+      }
+
+
+      let raw =
+        String(
+          row[1] || ""
+        )
+
+        .trim()
+
+        .replace(
+          "%",
+          ""
+        )
+
+        .trim();
+
+
+      let value =
+        parseFloat(raw);
+
+
+      if (
+        Number.isNaN(value)
+      ) {
+
+        continue;
+
+      }
+
+
+      /*
+        Google Sheets may return:
+
+        70%
+        OR
+        0.7
+      */
+
+      if (
+        value > 0 &&
+        value <= 1
+      ) {
+
+        value =
+          value * 100;
+
+      }
+
+
+      value =
+        Math.round(
+          value * 100
+        ) / 100;
+
+
+      newData.push(
+        [
+          expected.get(key),
+          value
+        ]
+      );
+
     }
 
-    if (newData.length !== 5) {
-      throw new Error("Expected 5 metrics, found " + newData.length);
+
+
+    if (
+      newData.length !== 5
+    ) {
+
+      throw new Error(
+        "Expected 5 metrics, found " +
+        newData.length
+      );
+
     }
 
-    data = newData;
+
+    data =
+      newData;
+
+
     renderDashboard();
 
+
     sync.textContent =
-      "Synced " + new Date().toLocaleTimeString();
+      "Synced " +
+      new Date()
+        .toLocaleTimeString();
+
 
   } catch (error) {
-    console.error("Google Sheets sync error:", error);
+
+    console.error(
+      "Google Sheets sync error:",
+      error
+    );
+
 
     sync.innerHTML =
-      '<span id="error">Sheet sync error: ' +
-      String(error.message || error) +
+
+      '<span id="error">' +
+
+      'Sheet sync error: ' +
+
+      String(
+        error.message ||
+        error
+      ) +
+
       '</span>';
+
   }
+
 }
 
-function playVideo(video, sceneId, next) {
-  showScene(sceneId);
-  video.currentTime = 0;
-  video.onended = next;
 
-  video.onerror = () => {
-    console.warn(sceneId + " missing/unavailable; skipping.");
-    setTimeout(next, 1000);
-  };
 
-  video.play().catch(() => {
-    setTimeout(next, 1000);
-  });
+/* =========================================================
+   CLOCK
+========================================================= */
+
+function updateClock() {
+
+  document
+    .getElementById("clock")
+    .textContent =
+      new Date()
+        .toLocaleString();
+
 }
 
-function runLoop() {
-  playVideo(video1, "ad1", () => {
-    playVideo(video2, "ad2", () => {
-      loadSheet();
-      showScene("dashboard");
-      setTimeout(runLoop, DASHBOARD_MS);
-    });
-  });
-}
 
-setInterval(() => {
-  document.getElementById("clock").textContent =
-    new Date().toLocaleString();
-}, 1000);
+setInterval(
+  updateClock,
+  1000
+);
+
+
+
+/* =========================================================
+   START SIGNAGE
+========================================================= */
 
 renderDashboard();
+
 loadSheet();
-setInterval(loadSheet, REFRESH_MS);
-runLoop();
+
+setInterval(
+  loadSheet,
+  REFRESH_MS
+);
+
+updateClock();
+
+playCurrentAd();
+
+
 </script>
+
 </body>
 </html>

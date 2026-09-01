@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MechTest Digital Signage</title>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin:0; width:100%; height:100%; background:#07121f; font-family:Arial,Helvetica,sans-serif; overflow:hidden; }
+  .stage { width:100vw; height:100vh; position:relative; background:#07121f; }
+  .scene { position:absolute; inset:0; display:none; }
+  .scene.active { display:block; }
+  video { width:100%; height:100%; object-fit:contain; background:#000; }
+  #dashboard { background:linear-gradient(135deg,#f8fbff,#eef4fb); color:#102642; padding:4vh 4vw; }
+  .top { display:flex; justify-content:space-between; align-items:center; margin-bottom:4vh; }
+  .title { font-size:3.2vw; font-weight:800; letter-spacing:.02em; }
+  .sub { font-size:1.15vw; color:#5c6f85; }
+  .grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1.4vw; }
+  .card { background:white; border-radius:1.2vw; padding:2vw 1.2vw; text-align:center; box-shadow:0 12px 30px rgba(18,45,75,.10); }
+  .label { font-size:1.15vw; font-weight:700; min-height:3.2em; display:flex; align-items:center; justify-content:center; }
+  .value { font-size:3.2vw; font-weight:800; margin:1vw 0; color:#159447; }
+  .ring {
+    --p:0;
+    width:8vw; height:8vw; border-radius:50%; margin:0 auto 1.2vw;
+    background:conic-gradient(#22b455 calc(var(--p)*1%), #e4ebf1 0);
+    position:relative;
+  }
+  .ring:after { content:""; position:absolute; inset:1.05vw; border-radius:50%; background:white; }
+  .foot { margin-top:4vh; display:flex; justify-content:space-between; align-items:center; color:#607489; font-size:1vw; }
+  .status { display:flex; align-items:center; gap:.6vw; }
+  .dot { width:.65vw; height:.65vw; border-radius:50%; background:#25b05b; box-shadow:0 0 0 .25vw rgba(37,176,91,.13); }
+  #error { color:#b42318; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div id="ad1" class="scene active"><video id="video1" src="media/ad1.mp4" muted playsinline></video></div>
+  <div id="ad2" class="scene"><video id="video2" src="media/ad2.mp4" muted playsinline></video></div>
+  <section id="dashboard" class="scene">
+    <div class="top">
+      <div>
+        <div class="title">SALES PROGRESS DASHBOARD</div>
+        <div class="sub">Live percentages from Google Sheets</div>
+      </div>
+      <div class="sub">MECHTEST</div>
+    </div>
+    <div class="grid" id="cards"></div>
+    <div class="foot">
+      <div class="status"><span class="dot"></span><span id="sync">Waiting for Google Sheets…</span></div>
+      <div id="clock"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const CONFIG = {
+  dashboardMs: 60000,
+  refreshMs: 30000,
+  gvizUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSgYkO7VW6kAjGgYS8BfIprjsD8l82rbrkaBNUxzmHiNftLWBScM513EsZTy6lV7L9fpFA_nj9Zpfsl/gviz/tq?gid=738983995&headers=0&range=A4:B8"
+};
+
+const defaults = [
+  ["Monthly Target",60],
+  ["Quarterly Target",80],
+  ["Annual Target",60],
+  ["Quarterly Bonus",60],
+  ["Annual Bonus",80]
+];
+
+const scenes = ["ad1","ad2","dashboard"];
+const vids = [document.getElementById("video1"), document.getElementById("video2")];
+let data = defaults.slice();
+
+function show(id) {
+  scenes.forEach(x => document.getElementById(x).classList.toggle("active", x===id));
+}
+
+function render() {
+  const cards = document.getElementById("cards");
+  cards.innerHTML = "";
+  data.forEach(([label,pct]) => {
+    pct = Math.max(0, Math.min(100, Number(pct)||0));
+    const c = document.createElement("div");
+    c.className = "card";
+    c.innerHTML = `<div class="label">${label}</div>
+                   <div class="value">${pct}%</div>
+                   <div class="ring" style="--p:${pct}"></div>
+                   <div class="sub">Progress</div>`;
+    cards.appendChild(c);
+  });
+}
+
+function parseGoogleResponse(resp) {
+  const rows = resp.getDataTable();
+  const out = [];
+  for (let r=0; r<rows.getNumberOfRows(); r++) {
+    const label = rows.getValue(r,0);
+    const raw = rows.getFormattedValue(r,1) || rows.getValue(r,1);
+    if (!label) continue;
+    const pct = parseFloat(String(raw).replace("%","").trim());
+    if (!Number.isNaN(pct)) out.push([String(label), pct]);
+  }
+  if (out.length) data = out.slice(0,5);
+  render();
+  document.getElementById("sync").textContent =
+    "Synced " + new Date().toLocaleTimeString();
+}
+
+function loadSheet() {
+  try {
+    const q = new google.visualization.Query(CONFIG.gvizUrl);
+    q.send(resp => {
+      if (resp.isError()) {
+        document.getElementById("sync").innerHTML =
+          '<span id="error">Sheet sync error — showing last values</span>';
+        return;
+      }
+      parseGoogleResponse(resp);
+    });
+  } catch(e) {
+    document.getElementById("sync").innerHTML =
+      '<span id="error">Sheet sync error — showing last values</span>';
+  }
+}
+
+async function playVideo(v, next) {
+  show(v === vids[0] ? "ad1" : "ad2");
+  v.currentTime = 0;
+  v.onended = next;
+  v.onerror = () => setTimeout(next, 1500);
+  try { await v.play(); } catch(e) { setTimeout(next, 1500); }
+}
+
+function runLoop() {
+  playVideo(vids[0], () => {
+    playVideo(vids[1], () => {
+      loadSheet();
+      show("dashboard");
+      setTimeout(runLoop, CONFIG.dashboardMs);
+    });
+  });
+}
+
+setInterval(() => {
+  document.getElementById("clock").textContent = new Date().toLocaleString();
+}, 1000);
+
+google.charts.load("current", {packages:["table"]});
+google.charts.setOnLoadCallback(() => {
+  render();
+  loadSheet();
+  setInterval(loadSheet, CONFIG.refreshMs);
+  runLoop();
+});
+</script>
+</body>
+</html>

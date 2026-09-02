@@ -466,11 +466,11 @@ body {
 
       <div class="logo-wrap">
 
-    <img
-    src="./mechtest-logo.PNG"
-    alt="MechTest Logo">
+        <img
+          src="./mechtest-logo.PNG"
+          alt="MechTest Logo">
 
-    </div>
+      </div>
 
     </div>
 
@@ -516,10 +516,30 @@ const CSV_URL =
 
 
 /*
-  Refresh Google Sheets every 10 seconds.
+  Check Google Sheets every 10 seconds.
 */
 
 const REFRESH_MS = 10000;
+
+
+/*
+  A changed dataset must be returned
+  3 consecutive times before it is accepted.
+
+  This prevents one stale Google response
+  from changing the workshop dashboard.
+*/
+
+const REQUIRED_CONFIRMATIONS = 3;
+
+
+/*
+  Browser storage key used to preserve
+  the last confirmed workshop figures.
+*/
+
+const STORAGE_KEY =
+  "mechtestConfirmedDashboardData";
 
 
 /* =========================================================
@@ -541,8 +561,22 @@ const defaults = [
 ];
 
 
-let data = defaults.slice();
+let data =
+  defaults.slice();
 
+
+/* =========================================================
+   ANTI-STALE STATE
+========================================================= */
+
+let confirmedSignature =
+  "";
+
+let candidateSignature =
+  "";
+
+let candidateCount =
+  0;
 
 
 /* =========================================================
@@ -564,7 +598,9 @@ let currentVideoIndex = 0;
 
 
 const signageVideo =
-  document.getElementById("signageVideo");
+  document.getElementById(
+    "signageVideo"
+  );
 
 
 /* =========================================================
@@ -574,7 +610,9 @@ const signageVideo =
 function playCurrentAd() {
 
   const videoUrl =
-    signagePlaylist[currentVideoIndex];
+    signagePlaylist[
+      currentVideoIndex
+    ];
 
 
   console.log(
@@ -591,13 +629,16 @@ function playCurrentAd() {
     videoUrl;
 
 
-  signageVideo.currentTime = 0;
+  signageVideo.currentTime =
+    0;
 
 
-  signageVideo.muted = false;
+  signageVideo.muted =
+    false;
 
 
-  signageVideo.volume = 1;
+  signageVideo.volume =
+    1;
 
 
   signageVideo.load();
@@ -611,23 +652,25 @@ function playCurrentAd() {
     playPromise !== undefined
   ) {
 
-    playPromise.catch(error => {
+    playPromise.catch(
+      error => {
 
-      console.error(
-        "Video autoplay with sound was blocked:",
-        error
-      );
+        console.error(
+          "Video autoplay with sound was blocked:",
+          error
+        );
 
 
-      document.body.addEventListener(
-        "click",
-        startVideoAfterClick,
-        {
-          once: true
-        }
-      );
+        document.body.addEventListener(
+          "click",
+          startVideoAfterClick,
+          {
+            once: true
+          }
+        );
 
-    });
+      }
+    );
 
   }
 
@@ -640,21 +683,25 @@ function playCurrentAd() {
 
 function startVideoAfterClick() {
 
-  signageVideo.muted = false;
+  signageVideo.muted =
+    false;
 
-  signageVideo.volume = 1;
+  signageVideo.volume =
+    1;
 
 
   signageVideo
     .play()
-    .catch(error => {
+    .catch(
+      error => {
 
-      console.error(
-        "Video playback failed after click:",
-        error
-      );
+        console.error(
+          "Video playback failed after click:",
+          error
+        );
 
-    });
+      }
+    );
 
 }
 
@@ -701,7 +748,9 @@ signageVideo.addEventListener(
 
     console.error(
       "Unable to load video:",
-      signagePlaylist[currentVideoIndex]
+      signagePlaylist[
+        currentVideoIndex
+      ]
     );
 
 
@@ -811,25 +860,12 @@ function getQuarterElapsedPercent() {
   let quarterStartYear;
 
 
-  /*
-    JavaScript months:
-
-    Jan = 0
-    Apr = 3
-    Jul = 6
-    Oct = 9
-  */
-
-
   if (
     month >= 6 &&
     month <= 8
   ) {
 
-    /* Q1 */
-
     quarterStartMonth = 6;
-
     quarterStartYear = year;
 
   }
@@ -839,10 +875,7 @@ function getQuarterElapsedPercent() {
     month <= 11
   ) {
 
-    /* Q2 */
-
     quarterStartMonth = 9;
-
     quarterStartYear = year;
 
   }
@@ -852,20 +885,14 @@ function getQuarterElapsedPercent() {
     month <= 2
   ) {
 
-    /* Q3 */
-
     quarterStartMonth = 0;
-
     quarterStartYear = year;
 
   }
 
   else {
 
-    /* Q4 */
-
     quarterStartMonth = 3;
-
     quarterStartYear = year;
 
   }
@@ -895,16 +922,11 @@ function getQuarterElapsedPercent() {
     );
 
 
-  const elapsed =
-    now - start;
-
-
-  const total =
-    end - start;
-
-
   return clampPercent(
-    (elapsed / total) * 100
+    (
+      (now - start) /
+      (end - start)
+    ) * 100
   );
 
 }
@@ -914,7 +936,6 @@ function getQuarterElapsedPercent() {
 /* =========================================================
    FISCAL YEAR TIME ELAPSED
 
-   MECHTEST FINANCIAL YEAR:
    JULY 1 → JUNE 30
 ========================================================= */
 
@@ -933,15 +954,6 @@ function getFiscalYearElapsedPercent() {
 
 
   let fiscalStartYear;
-
-
-  /*
-    July onwards:
-    FY started this calendar year.
-
-    January - June:
-    FY started previous calendar year.
-  */
 
 
   if (
@@ -985,16 +997,11 @@ function getFiscalYearElapsedPercent() {
     );
 
 
-  const elapsed =
-    now - start;
-
-
-  const total =
-    end - start;
-
-
   return clampPercent(
-    (elapsed / total) * 100
+    (
+      (now - start) /
+      (end - start)
+    ) * 100
   );
 
 }
@@ -1002,10 +1009,12 @@ function getFiscalYearElapsedPercent() {
 
 
 /* =========================================================
-   GET TIME ELAPSED FOR TARGET
+   GET TIME ELAPSED
 ========================================================= */
 
-function getTimeElapsedPercent(label) {
+function getTimeElapsedPercent(
+  label
+) {
 
   switch (label) {
 
@@ -1035,18 +1044,23 @@ function getTimeElapsedPercent(label) {
 
 
 /* =========================================================
-   DETERMINE DOUBLE RING CARDS
+   DOUBLE RING CARDS
 ========================================================= */
 
-function usesDoubleRing(label) {
+function usesDoubleRing(
+  label
+) {
 
   return (
 
-    label === "Monthly Target" ||
+    label ===
+      "Monthly Target" ||
 
-    label === "Quarterly Target" ||
+    label ===
+      "Quarterly Target" ||
 
-    label === "Annual Target"
+    label ===
+      "Annual Target"
 
   );
 
@@ -1055,7 +1069,7 @@ function usesDoubleRing(label) {
 
 
 /* =========================================================
-   AHEAD / BEHIND STATUS
+   AHEAD / BEHIND
 ========================================================= */
 
 function getScheduleStatus(
@@ -1074,7 +1088,8 @@ function getScheduleStatus(
 
     return {
 
-      className: "ahead",
+      className:
+        "ahead",
 
       text:
         "Ahead by " +
@@ -1092,7 +1107,8 @@ function getScheduleStatus(
 
     return {
 
-      className: "behind",
+      className:
+        "behind",
 
       text:
         "Behind by " +
@@ -1108,9 +1124,11 @@ function getScheduleStatus(
 
   return {
 
-    className: "ontrack",
+    className:
+      "ontrack",
 
-    text: "On track"
+    text:
+      "On track"
 
   };
 
@@ -1130,7 +1148,8 @@ function renderDashboard() {
     );
 
 
-  cards.innerHTML = "";
+  cards.innerHTML =
+    "";
 
 
   data.forEach(
@@ -1153,12 +1172,10 @@ function renderDashboard() {
         "card";
 
 
-      /* ===================================================
-         TARGET CARDS WITH DOUBLE RINGS
-      =================================================== */
-
       if (
-        usesDoubleRing(label)
+        usesDoubleRing(
+          label
+        )
       ) {
 
 
@@ -1180,16 +1197,12 @@ function renderDashboard() {
         card.innerHTML = `
 
           <div class="label">
-
             ${label}
-
           </div>
 
 
           <div class="value">
-
             ${pct.toFixed(1)}%
-
           </div>
 
 
@@ -1209,9 +1222,7 @@ function renderDashboard() {
 
 
             <div class="ring-center">
-
               ${pct.toFixed(0)}%
-
             </div>
 
 
@@ -1258,25 +1269,17 @@ function renderDashboard() {
       }
 
 
-      /* ===================================================
-         BONUS CARDS KEEP NORMAL SINGLE RING
-      =================================================== */
-
       else {
 
         card.innerHTML = `
 
           <div class="label">
-
             ${label}
-
           </div>
 
 
           <div class="value">
-
             ${pct.toFixed(1)}%
-
           </div>
 
 
@@ -1287,9 +1290,7 @@ function renderDashboard() {
 
 
           <div class="sub">
-
             Progress
-
           </div>
 
         `;
@@ -1312,13 +1313,20 @@ function renderDashboard() {
    CSV PARSER
 ========================================================= */
 
-function parseCSVLine(line) {
+function parseCSVLine(
+  line
+) {
 
-  const values = [];
+  const values =
+    [];
 
-  let current = "";
 
-  let quoted = false;
+  let current =
+    "";
+
+
+  let quoted =
+    false;
 
 
   for (
@@ -1340,7 +1348,8 @@ function parseCSVLine(line) {
         line[i + 1] === '"'
       ) {
 
-        current += '"';
+        current +=
+          '"';
 
         i++;
 
@@ -1355,6 +1364,7 @@ function parseCSVLine(line) {
 
     }
 
+
     else if (
       char === "," &&
       !quoted
@@ -1364,9 +1374,12 @@ function parseCSVLine(line) {
         current
       );
 
-      current = "";
+
+      current =
+        "";
 
     }
+
 
     else {
 
@@ -1390,6 +1403,558 @@ function parseCSVLine(line) {
 
 
 /* =========================================================
+   CREATE DATA SIGNATURE
+========================================================= */
+
+function createDataSignature(
+  dataset
+) {
+
+  return JSON.stringify(
+    dataset
+  );
+
+}
+
+
+
+/* =========================================================
+   SAVE CONFIRMED DATA LOCALLY
+========================================================= */
+
+function saveConfirmedData(
+  dataset
+) {
+
+  try {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+
+      JSON.stringify(
+        {
+          data:
+            dataset,
+
+          savedAt:
+            Date.now()
+        }
+      )
+    );
+
+  }
+
+  catch (error) {
+
+    console.warn(
+      "Unable to save confirmed dashboard data:",
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   RESTORE LAST CONFIRMED DATA
+========================================================= */
+
+function restoreConfirmedData() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+
+    if (
+      !saved
+    ) {
+
+      return;
+
+    }
+
+
+    const parsed =
+      JSON.parse(
+        saved
+      );
+
+
+    if (
+      !parsed ||
+      !Array.isArray(
+        parsed.data
+      ) ||
+      parsed.data.length !== 5
+    ) {
+
+      return;
+
+    }
+
+
+    data =
+      parsed.data;
+
+
+    confirmedSignature =
+      createDataSignature(
+        data
+      );
+
+
+    console.log(
+      "Restored last confirmed dashboard data."
+    );
+
+  }
+
+  catch (error) {
+
+    console.warn(
+      "Unable to restore dashboard cache:",
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   APPLY CONFIRMED DATA
+========================================================= */
+
+function applyConfirmedData(
+  newData
+) {
+
+  data =
+    newData;
+
+
+  confirmedSignature =
+    createDataSignature(
+      newData
+    );
+
+
+  candidateSignature =
+    "";
+
+
+  candidateCount =
+    0;
+
+
+  saveConfirmedData(
+    newData
+  );
+
+
+  renderDashboard();
+
+}
+
+
+
+/* =========================================================
+   PROCESS POSSIBLE UPDATED DATA
+
+   IMPORTANT:
+   Changed values are NOT displayed immediately.
+
+   They must be returned by Google
+   three consecutive times first.
+========================================================= */
+
+function processIncomingData(
+  newData,
+  sync
+) {
+
+  const newSignature =
+    createDataSignature(
+      newData
+    );
+
+
+  /*
+    No confirmed dataset yet.
+
+    First valid Google response becomes
+    the initial confirmed dataset.
+  */
+
+  if (
+    !confirmedSignature
+  ) {
+
+    applyConfirmedData(
+      newData
+    );
+
+
+    sync.textContent =
+      "Synced " +
+      new Date()
+        .toLocaleTimeString();
+
+
+    return;
+
+  }
+
+
+  /*
+    Google returned the SAME dataset
+    currently displayed.
+
+    Nothing needs to change.
+  */
+
+  if (
+    newSignature ===
+    confirmedSignature
+  ) {
+
+    candidateSignature =
+      "";
+
+
+    candidateCount =
+      0;
+
+
+    sync.textContent =
+      "Synced " +
+      new Date()
+        .toLocaleTimeString();
+
+
+    return;
+
+  }
+
+
+  /*
+    Google returned a different dataset.
+
+    Start / continue verification.
+  */
+
+  if (
+    newSignature ===
+    candidateSignature
+  ) {
+
+    candidateCount++;
+
+  }
+
+  else {
+
+    candidateSignature =
+      newSignature;
+
+
+    candidateCount =
+      1;
+
+  }
+
+
+  console.log(
+    "Potential Google Sheets update detected:",
+    candidateCount +
+    "/" +
+    REQUIRED_CONFIRMATIONS
+  );
+
+
+  /*
+    Do NOT update the workshop display
+    until the changed data has been
+    confirmed multiple times.
+  */
+
+  if (
+    candidateCount <
+    REQUIRED_CONFIRMATIONS
+  ) {
+
+    sync.textContent =
+      "Verifying latest Google Sheets data " +
+      candidateCount +
+      "/" +
+      REQUIRED_CONFIRMATIONS +
+      "...";
+
+
+    return;
+
+  }
+
+
+  /*
+    Same changed dataset has now been
+    returned consistently.
+
+    Accept it as the new confirmed state.
+  */
+
+  applyConfirmedData(
+    newData
+  );
+
+
+  sync.textContent =
+    "Updated & verified " +
+    new Date()
+      .toLocaleTimeString();
+
+}
+
+
+
+/* =========================================================
+   FETCH GOOGLE SHEETS DATA
+========================================================= */
+
+async function fetchSheetData() {
+
+  /*
+    Add multiple unique values so every
+    request has a different URL.
+
+    Browser caching is also disabled.
+  */
+
+  const requestUrl =
+
+    CSV_URL +
+
+    "&_ts=" +
+    Date.now() +
+
+    "&_r=" +
+    Math.random()
+      .toString(36)
+      .slice(2);
+
+
+  const response =
+    await fetch(
+      requestUrl,
+      {
+        method:
+          "GET",
+
+        cache:
+          "no-store",
+
+        headers: {
+          "Accept":
+            "text/csv,text/plain,*/*"
+        }
+      }
+    );
+
+
+  if (
+    !response.ok
+  ) {
+
+    throw new Error(
+      "HTTP " +
+      response.status
+    );
+
+  }
+
+
+  const csvText =
+    await response.text();
+
+
+  const rows =
+    csvText
+
+      .replace(
+        /^\uFEFF/,
+        ""
+      )
+
+      .split(
+        /\r?\n/
+      )
+
+      .filter(
+        Boolean
+      )
+
+      .map(
+        parseCSVLine
+      );
+
+
+  const expected =
+    new Map(
+
+      defaults.map(
+        ([name]) => [
+
+          name.toLowerCase(),
+
+          name
+
+        ]
+      )
+
+    );
+
+
+  const newData =
+    [];
+
+
+  for (
+    const row of rows
+  ) {
+
+
+    if (
+      row.length < 2
+    ) {
+
+      continue;
+
+    }
+
+
+    const label =
+      String(
+        row[0] || ""
+      )
+      .trim();
+
+
+    const key =
+      label.toLowerCase();
+
+
+    if (
+      !expected.has(
+        key
+      )
+    ) {
+
+      continue;
+
+    }
+
+
+    let raw =
+      String(
+        row[1] || ""
+      )
+
+      .trim()
+
+      .replace(
+        "%",
+        ""
+      )
+
+      .trim();
+
+
+    let value =
+      parseFloat(
+        raw
+      );
+
+
+    if (
+      Number.isNaN(
+        value
+      )
+    ) {
+
+      continue;
+
+    }
+
+
+    /*
+      Google may return:
+
+      70%
+      OR
+      0.7
+    */
+
+    if (
+      value > 0 &&
+      value <= 1
+    ) {
+
+      value =
+        value * 100;
+
+    }
+
+
+    value =
+      Math.round(
+        value * 100
+      ) / 100;
+
+
+    newData.push(
+      [
+
+        expected.get(
+          key
+        ),
+
+        value
+
+      ]
+    );
+
+  }
+
+
+  if (
+    newData.length !== 5
+  ) {
+
+    throw new Error(
+
+      "Expected 5 metrics, found " +
+
+      newData.length
+
+    );
+
+  }
+
+
+  return newData;
+
+}
+
+
+
+/* =========================================================
    LOAD GOOGLE SHEET
 ========================================================= */
 
@@ -1404,222 +1969,20 @@ async function loadSheet() {
   try {
 
     sync.textContent =
-      "Syncing Google Sheets...";
-
-
-    const requestUrl =
-      CSV_URL +
-      "&_=" +
-      Date.now();
-
-
-    const response =
-      await fetch(
-        requestUrl,
-        {
-          method: "GET",
-          cache: "no-store"
-        }
-      );
-
-
-    if (
-      !response.ok
-    ) {
-
-      throw new Error(
-        "HTTP " +
-        response.status
-      );
-
-    }
-
-
-    const csvText =
-      await response.text();
-
-
-    const rows =
-      csvText
-
-        .replace(
-          /^\uFEFF/,
-          ""
-        )
-
-        .split(
-          /\r?\n/
-        )
-
-        .filter(
-          Boolean
-        )
-
-        .map(
-          parseCSVLine
-        );
-
-
-    const expected =
-      new Map(
-
-        defaults.map(
-          ([name]) => [
-
-            name.toLowerCase(),
-
-            name
-
-          ]
-        )
-
-      );
+      "Checking Google Sheets...";
 
 
     const newData =
-      [];
+      await fetchSheetData();
 
 
-    for (
-      const row of rows
-    ) {
-
-
-      if (
-        row.length < 2
-      ) {
-
-        continue;
-
-      }
-
-
-      const label =
-        String(
-          row[0] || ""
-        )
-        .trim();
-
-
-      const key =
-        label.toLowerCase();
-
-
-      if (
-        !expected.has(key)
-      ) {
-
-        continue;
-
-      }
-
-
-      let raw =
-        String(
-          row[1] || ""
-        )
-
-        .trim()
-
-        .replace(
-          "%",
-          ""
-        )
-
-        .trim();
-
-
-      let value =
-        parseFloat(
-          raw
-        );
-
-
-      if (
-        Number.isNaN(
-          value
-        )
-      ) {
-
-        continue;
-
-      }
-
-
-      /*
-        Google Sheets may return:
-
-        70%
-
-        OR
-
-        0.7
-      */
-
-
-      if (
-        value > 0 &&
-        value <= 1
-      ) {
-
-        value =
-          value * 100;
-
-      }
-
-
-      value =
-        Math.round(
-          value * 100
-        ) / 100;
-
-
-      newData.push(
-        [
-
-          expected.get(
-            key
-          ),
-
-          value
-
-        ]
-      );
-
-    }
-
-
-    if (
-      newData.length !== 5
-    ) {
-
-      throw new Error(
-
-        "Expected 5 metrics, found " +
-
-        newData.length
-
-      );
-
-    }
-
-
-    data =
-      newData;
-
-
-    renderDashboard();
-
-
-    sync.textContent =
-
-      "Synced " +
-
-      new Date()
-        .toLocaleTimeString();
-
+    processIncomingData(
+      newData,
+      sync
+    );
 
   }
+
 
   catch (error) {
 
@@ -1629,16 +1992,21 @@ async function loadSheet() {
     );
 
 
+    /*
+      IMPORTANT:
+
+      Do not replace the dashboard values
+      when Google Sheets cannot be reached.
+
+      Keep displaying the last confirmed
+      workshop figures.
+    */
+
     sync.innerHTML =
 
       '<span id="error">' +
 
-      'Sheet sync error: ' +
-
-      String(
-        error.message ||
-        error
-      ) +
+      'Sync unavailable - showing last confirmed data' +
 
       '</span>';
 
@@ -1676,6 +2044,14 @@ setInterval(
 /* =========================================================
    START SIGNAGE
 ========================================================= */
+
+/*
+  Restore last known confirmed figures
+  BEFORE rendering anything.
+*/
+
+restoreConfirmedData();
+
 
 renderDashboard();
 

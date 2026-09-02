@@ -111,6 +111,25 @@ body {
 
 
 /* =========================================================
+   MECHTEST LOGO
+========================================================= */
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.logo-wrap img {
+  height: 4.5vh;
+  width: auto;
+  max-width: 14vw;
+  object-fit: contain;
+  display: block;
+}
+
+
+/* =========================================================
    DASHBOARD GRID
 ========================================================= */
 
@@ -279,8 +298,13 @@ body {
 
       </div>
 
-      <div class="sub">
-        <img src="mechtest logo.png" alt="MechTest Logo">
+
+      <div class="logo-wrap">
+
+        <img
+          src="mechtest%20logo.PNG"
+          alt="MechTest Logo">
+
       </div>
 
     </div>
@@ -361,7 +385,7 @@ const signagePlaylist = [
   "https://github.com/marctanabc/Mechtest-Dashboard/releases/download/signage-v2/Ad1.mp4",
 
   "https://github.com/marctanabc/Mechtest-Dashboard/releases/download/signage-v2/Ad2.mp4",
-  
+
   "https://github.com/marctanabc/Mechtest-Dashboard/releases/download/signage-v2/Ad3.mp4"
 
 ];
@@ -418,12 +442,6 @@ function playCurrentAd() {
         error
       );
 
-      /*
-        Chrome can block autoplay with sound.
-
-        If blocked, wait for one click anywhere
-        on the page, then start the playlist.
-      */
 
       document.body.addEventListener(
         "click",

@@ -1,10 +1,16 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1">
 
 <title>MechTest Digital Signage</title>
+
 
 <style>
 
@@ -30,8 +36,10 @@ body {
 .stage {
   width: 100vw;
   height: 100vh;
+
   display: flex;
   flex-direction: column;
+
   background: #07121f;
 }
 
@@ -43,6 +51,7 @@ body {
 #videoArea {
   width: 100%;
   height: 65vh;
+
   background: #000;
 
   display: flex;
@@ -55,7 +64,9 @@ body {
 #signageVideo {
   width: 100%;
   height: 100%;
+
   object-fit: contain;
+
   background: #000;
 }
 
@@ -67,9 +78,18 @@ body {
 #dashboard {
   width: 100%;
   height: 35vh;
-  background: linear-gradient(135deg, #f8fbff, #eef4fb);
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff,
+      #eef4fb
+    );
+
   color: #102642;
+
   padding: 1.2vh 2vw;
+
   overflow: hidden;
 }
 
@@ -82,6 +102,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   margin-bottom: 1vh;
 }
 
@@ -111,7 +132,9 @@ body {
   height: 4.5vh;
   width: auto;
   max-width: 14vw;
+
   object-fit: contain;
+
   display: block;
 }
 
@@ -122,7 +145,10 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
   gap: 1vw;
 }
 
@@ -133,16 +159,24 @@ body {
 
 .card {
   background: white;
+
   border-radius: .8vw;
+
   padding: .65vw .55vw;
+
   text-align: center;
-  box-shadow: 0 6px 16px rgba(18,45,75,.10);
+
+  box-shadow:
+    0 6px 16px
+    rgba(18,45,75,.10);
 }
 
 .label {
   font-size: .8vw;
   font-weight: 700;
+
   min-height: 2.2em;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,7 +185,11 @@ body {
 .value {
   font-size: 1.55vw;
   font-weight: 800;
-  margin: .15vw 0 .2vw;
+
+  margin:
+    .15vw 0
+    .2vw;
+
   color: #159447;
 }
 
@@ -162,19 +200,35 @@ body {
 
 .ring {
   --p: 0;
+
   width: 4vw;
   height: 4vw;
+
   border-radius: 50%;
-  margin: 0 auto .3vw;
-  background: conic-gradient(#22b455 calc(var(--p) * 1%), #e4ebf1 0);
+
+  margin:
+    0 auto .3vw;
+
+  background:
+    conic-gradient(
+      #22b455
+      calc(var(--p) * 1%),
+
+      #e4ebf1 0
+    );
+
   position: relative;
 }
 
 .ring:after {
   content: "";
+
   position: absolute;
+
   inset: .55vw;
+
   border-radius: 50%;
+
   background: #fff;
 }
 
@@ -188,63 +242,108 @@ body {
 
 .double-ring {
   position: relative;
+
   width: 5.2vw;
   height: 5.2vw;
-  margin: .1vw auto .15vw;
+
+  margin:
+    .1vw auto
+    .15vw;
 }
 
 
-/* OUTER INVOICE RING */
+/* =========================================================
+   OUTER INVOICE RING
+========================================================= */
 
 .invoice-ring {
   --invoice: 0;
+
   position: absolute;
+
   inset: 0;
+
   border-radius: 50%;
-  background: conic-gradient(#22b455 calc(var(--invoice) * 1%), #e5eaf0 0);
+
+  background:
+    conic-gradient(
+      #22b455
+      calc(var(--invoice) * 1%),
+
+      #e5eaf0 0
+    );
+
   z-index: 1;
 }
 
 .invoice-ring:after {
   content: "";
+
   position: absolute;
+
   inset: .42vw;
+
   border-radius: 50%;
+
   background: #fff;
 }
 
 
-/* INNER TIME RING */
+/* =========================================================
+   INNER TIME RING
+========================================================= */
 
 .time-ring {
   --time: 0;
+
   position: absolute;
+
   inset: .82vw;
+
   border-radius: 50%;
-  background: conic-gradient(#7393b3 calc(var(--time) * 1%), #e5eaf0 0);
+
+  background:
+    conic-gradient(
+      #7393b3
+      calc(var(--time) * 1%),
+
+      #e5eaf0 0
+    );
+
   z-index: 2;
 }
 
 .time-ring:after {
   content: "";
+
   position: absolute;
+
   inset: .42vw;
+
   border-radius: 50%;
+
   background: #fff;
 }
 
 
-/* NUMBER IN CENTRE = TIME ELAPSED */
+/* =========================================================
+   CENTRE VALUE = TIME ELAPSED
+========================================================= */
 
 .ring-center {
   position: absolute;
+
   inset: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   z-index: 5;
+
   font-size: .72vw;
   font-weight: 800;
+
   color: #7393b3;
 }
 
@@ -255,23 +354,29 @@ body {
 
 .ring-legend {
   margin-top: .1vw;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   gap: .55vw;
+
   font-size: .57vw;
+
   color: #607489;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
+
   gap: .18vw;
 }
 
 .legend-dot {
   width: .42vw;
   height: .42vw;
+
   border-radius: 50%;
 }
 
@@ -290,6 +395,7 @@ body {
 
 .schedule-status {
   margin-top: .18vw;
+
   font-size: .66vw;
   font-weight: 800;
 }
@@ -313,23 +419,29 @@ body {
 
 .foot {
   margin-top: .6vh;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   color: #607489;
+
   font-size: .7vw;
 }
 
 .status {
   display: flex;
   align-items: center;
+
   gap: .4vw;
 }
 
 .dot {
   width: .45vw;
   height: .45vw;
+
   border-radius: 50%;
+
   background: #25b05b;
 }
 
@@ -338,23 +450,29 @@ body {
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="stage">
+
 
   <!-- =====================================================
        VIDEO ADS
   ====================================================== -->
 
   <div id="videoArea">
+
     <video
       id="signageVideo"
       autoplay
       playsinline
       preload="auto">
     </video>
+
   </div>
 
 
@@ -364,9 +482,12 @@ body {
 
   <section id="dashboard">
 
+
     <div class="top">
 
+
       <div>
+
         <div class="title">
           SALES PROGRESS DASHBOARD
         </div>
@@ -374,75 +495,119 @@ body {
         <div class="sub">
           Live percentages from Google Sheets
         </div>
+
       </div>
 
+
       <div class="logo-wrap">
+
         <img
           src="./mechtest-logo.PNG"
           alt="MechTest Logo">
+
       </div>
 
+
     </div>
+
 
     <div
       class="grid"
       id="cards">
     </div>
 
+
     <div class="foot">
 
+
       <div class="status">
+
         <span class="dot"></span>
+
         <span id="sync">
           Connecting to Google Sheets...
         </span>
+
       </div>
+
 
       <div id="clock"></div>
 
+
     </div>
 
+
   </section>
+
 
 </div>
 
 
+
 <script>
 
+
 /* =========================================================
-   GOOGLE SHEETS
+   GOOGLE APPS SCRIPT API
 ========================================================= */
 
-const CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSgYkO7VW6kAjGgYS8BfIprjsD8l82rbrkaBNUxzmHiNftLWBScM513EsZTy6lV7L9fpFA_nj9Zpfsl/pub?gid=738983995&single=true&output=csv";
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwVIlg1d8rbSFxSZ4xW25DuSh9Nxww7jGrVzEw775SIr81n8M8dv7kk0thkkEKHpOnI/exec";
 
-const REFRESH_MS = 10000;
+
+/*
+  Dashboard requests current data
+  every 10 seconds.
+*/
+
+const REFRESH_MS =
+  10000;
+
+
+/*
+  Last valid API data is kept locally.
+
+  If internet/API temporarily fails,
+  the workshop still sees the most
+  recently received valid figures.
+*/
 
 const STORAGE_KEY =
-  "mechtestConfirmedDashboardData";
+  "mechtestDashboardApiData";
 
 
 /* =========================================================
-   DEFAULT DASHBOARD DATA
+   EXPECTED DASHBOARD METRICS
 ========================================================= */
 
 const defaults = [
+
   ["Monthly Target", 100],
+
   ["Quarterly Target", 100],
+
   ["Annual Target", 100],
+
   ["Quarterly Bonus", 100],
+
   ["Annual Bonus", 100]
+
 ];
 
-let data = defaults.slice();
+
+let data =
+  defaults.slice();
 
 
 /* =========================================================
-   DATA STATE
+   LAST API STATE
 ========================================================= */
 
-let currentSignature = "";
-let previousSignature = "";
+let currentSignature =
+  "";
+
+let lastApiGeneratedAt =
+  "";
 
 
 /* =========================================================
@@ -450,15 +615,24 @@ let previousSignature = "";
 ========================================================= */
 
 const signagePlaylist = [
+
   "https://github.com/marctanabc/Mechtest-Dashboard/releases/download/signage-v2/Ad1.mp4",
+
   "https://github.com/marctanabc/Mechtest-Dashboard/releases/download/signage-v2/Ad2.mp4",
+
   "https://github.com/marctanabc/Mechtest-Dashboard/releases/download/signage-v2/Ad3.mp4"
+
 ];
 
-let currentVideoIndex = 0;
+
+let currentVideoIndex =
+  0;
+
 
 const signageVideo =
-  document.getElementById("signageVideo");
+  document.getElementById(
+    "signageVideo"
+  );
 
 
 /* =========================================================
@@ -468,38 +642,71 @@ const signageVideo =
 function playCurrentAd() {
 
   const videoUrl =
-    signagePlaylist[currentVideoIndex];
+    signagePlaylist[
+      currentVideoIndex
+    ];
+
 
   console.log(
     "Playing Ad " +
     (currentVideoIndex + 1),
+
     videoUrl
   );
 
+
   signageVideo.pause();
-  signageVideo.src = videoUrl;
-  signageVideo.currentTime = 0;
-  signageVideo.muted = false;
-  signageVideo.volume = 1;
+
+
+  signageVideo.src =
+    videoUrl;
+
+
+  signageVideo.currentTime =
+    0;
+
+
+  signageVideo.muted =
+    false;
+
+
+  signageVideo.volume =
+    1;
+
+
   signageVideo.load();
+
 
   const playPromise =
     signageVideo.play();
 
-  if (playPromise !== undefined) {
-    playPromise.catch(error => {
-      console.error(
-        "Video autoplay with sound was blocked:",
-        error
-      );
 
-      document.body.addEventListener(
-        "click",
-        startVideoAfterClick,
-        { once: true }
-      );
-    });
+  if (
+    playPromise !== undefined
+  ) {
+
+    playPromise.catch(
+      error => {
+
+        console.error(
+          "Video autoplay with sound was blocked:",
+          error
+        );
+
+
+        document.body.addEventListener(
+          "click",
+          startVideoAfterClick,
+          {
+            once: true
+          }
+        );
+
+      }
+    );
+
   }
+
 }
 
 
@@ -509,15 +716,26 @@ function playCurrentAd() {
 
 function startVideoAfterClick() {
 
-  signageVideo.muted = false;
-  signageVideo.volume = 1;
+  signageVideo.muted =
+    false;
 
-  signageVideo.play().catch(error => {
-    console.error(
-      "Video playback failed after click:",
-      error
+
+  signageVideo.volume =
+    1;
+
+
+  signageVideo
+    .play()
+    .catch(
+      error => {
+
+        console.error(
+          "Video playback failed after click:",
+          error
+        );
+
+      }
     );
-  });
 
 }
 
@@ -527,11 +745,16 @@ function startVideoAfterClick() {
 ========================================================= */
 
 function playNextAd() {
+
   currentVideoIndex =
-    (currentVideoIndex + 1) %
+    (
+      currentVideoIndex + 1
+    ) %
     signagePlaylist.length;
 
+
   playCurrentAd();
+
 }
 
 
@@ -542,19 +765,30 @@ function playNextAd() {
 signageVideo.addEventListener(
   "ended",
   function () {
+
     playNextAd();
+
   }
 );
+
 
 signageVideo.addEventListener(
   "error",
   function () {
+
     console.error(
       "Unable to load video:",
-      signagePlaylist[currentVideoIndex]
+      signagePlaylist[
+        currentVideoIndex
+      ]
     );
 
-    setTimeout(playNextAd, 2000);
+
+    setTimeout(
+      playNextAd,
+      2000
+    );
+
   }
 );
 
@@ -563,11 +797,18 @@ signageVideo.addEventListener(
    PERCENTAGE HELPER
 ========================================================= */
 
-function clampPercent(value) {
+function clampPercent(
+  value
+) {
+
   return Math.max(
     0,
-    Math.min(100, Number(value) || 0)
+    Math.min(
+      100,
+      Number(value) || 0
+    )
   );
+
 }
 
 
@@ -577,84 +818,187 @@ function clampPercent(value) {
 
 function getMonthElapsedPercent() {
 
-  const now = new Date();
+  const now =
+    new Date();
+
 
   const start =
     new Date(
+
       now.getFullYear(),
+
       now.getMonth(),
+
       1,
-      0, 0, 0, 0
+
+      0,
+      0,
+      0,
+      0
+
     );
+
 
   const end =
     new Date(
+
       now.getFullYear(),
+
       now.getMonth() + 1,
+
       1,
-      0, 0, 0, 0
+
+      0,
+      0,
+      0,
+      0
+
     );
 
+
   return clampPercent(
-    ((now - start) / (end - start)) * 100
+
+    (
+      (now - start) /
+      (end - start)
+    ) *
+
+    100
+
   );
+
 }
 
 
 /* =========================================================
    FISCAL QUARTER TIME ELAPSED
 
-   Q1 = JUL - SEP
-   Q2 = OCT - DEC
-   Q3 = JAN - MAR
-   Q4 = APR - JUN
+   MechTest Fiscal Year:
+   July 1 -> June 30
+
+   Q1 = Jul - Sep
+   Q2 = Oct - Dec
+   Q3 = Jan - Mar
+   Q4 = Apr - Jun
 ========================================================= */
 
 function getQuarterElapsedPercent() {
 
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
+  const now =
+    new Date();
+
+
+  const year =
+    now.getFullYear();
+
+
+  const month =
+    now.getMonth();
+
 
   let quarterStartMonth;
+
   let quarterStartYear;
 
-  if (month >= 6 && month <= 8) {
-    quarterStartMonth = 6;
-    quarterStartYear = year;
+
+  if (
+    month >= 6 &&
+    month <= 8
+  ) {
+
+    quarterStartMonth =
+      6;
+
+    quarterStartYear =
+      year;
+
   }
-  else if (month >= 9 && month <= 11) {
-    quarterStartMonth = 9;
-    quarterStartYear = year;
+
+
+  else if (
+    month >= 9 &&
+    month <= 11
+  ) {
+
+    quarterStartMonth =
+      9;
+
+    quarterStartYear =
+      year;
+
   }
-  else if (month >= 0 && month <= 2) {
-    quarterStartMonth = 0;
-    quarterStartYear = year;
+
+
+  else if (
+    month >= 0 &&
+    month <= 2
+  ) {
+
+    quarterStartMonth =
+      0;
+
+    quarterStartYear =
+      year;
+
   }
+
+
   else {
-    quarterStartMonth = 3;
-    quarterStartYear = year;
+
+    quarterStartMonth =
+      3;
+
+    quarterStartYear =
+      year;
+
   }
+
 
   const start =
     new Date(
+
       quarterStartYear,
+
       quarterStartMonth,
+
       1,
-      0, 0, 0, 0
+
+      0,
+      0,
+      0,
+      0
+
     );
+
 
   const end =
     new Date(
+
       quarterStartYear,
+
       quarterStartMonth + 3,
+
       1,
-      0, 0, 0, 0
+
+      0,
+      0,
+      0,
+      0
+
     );
 
+
   return clampPercent(
-    ((now - start) / (end - start)) * 100
+
+    (
+      (now - start) /
+      (end - start)
+    ) *
+
+    100
+
   );
+
 }
 
 
@@ -666,38 +1010,83 @@ function getQuarterElapsedPercent() {
 
 function getFiscalYearElapsedPercent() {
 
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
+  const now =
+    new Date();
+
+
+  const year =
+    now.getFullYear();
+
+
+  const month =
+    now.getMonth();
+
 
   let fiscalStartYear;
 
-  if (month >= 6) {
-    fiscalStartYear = year;
+
+  if (
+    month >= 6
+  ) {
+
+    fiscalStartYear =
+      year;
+
   }
+
   else {
-    fiscalStartYear = year - 1;
+
+    fiscalStartYear =
+      year - 1;
+
   }
+
 
   const start =
     new Date(
+
       fiscalStartYear,
+
       6,
+
       1,
-      0, 0, 0, 0
+
+      0,
+      0,
+      0,
+      0
+
     );
+
 
   const end =
     new Date(
+
       fiscalStartYear + 1,
+
       6,
+
       1,
-      0, 0, 0, 0
+
+      0,
+      0,
+      0,
+      0
+
     );
 
+
   return clampPercent(
-    ((now - start) / (end - start)) * 100
+
+    (
+      (now - start) /
+      (end - start)
+    ) *
+
+    100
+
   );
+
 }
 
 
@@ -705,21 +1094,35 @@ function getFiscalYearElapsedPercent() {
    GET TIME ELAPSED
 ========================================================= */
 
-function getTimeElapsedPercent(label) {
+function getTimeElapsedPercent(
+  label
+) {
 
-  switch (label) {
+  switch (
+    label
+  ) {
+
     case "Monthly Target":
+
       return getMonthElapsedPercent();
 
+
     case "Quarterly Target":
+
       return getQuarterElapsedPercent();
 
+
     case "Annual Target":
+
       return getFiscalYearElapsedPercent();
 
+
     default:
+
       return null;
+
   }
+
 }
 
 
@@ -727,12 +1130,23 @@ function getTimeElapsedPercent(label) {
    DOUBLE RING CARDS
 ========================================================= */
 
-function usesDoubleRing(label) {
+function usesDoubleRing(
+  label
+) {
+
   return (
-    label === "Monthly Target" ||
-    label === "Quarterly Target" ||
-    label === "Annual Target"
+
+    label ===
+      "Monthly Target" ||
+
+    label ===
+      "Quarterly Target" ||
+
+    label ===
+      "Annual Target"
+
   );
+
 }
 
 
@@ -746,26 +1160,60 @@ function getScheduleStatus(
 ) {
 
   const difference =
-    progressPercent - timePercent;
+    progressPercent -
+    timePercent;
 
-  if (difference > 1) {
+
+  if (
+    difference > 1
+  ) {
+
     return {
-      className: "ahead",
-      text: "Ahead by " + difference.toFixed(1) + "%"
+
+      className:
+        "ahead",
+
+      text:
+        "Ahead by " +
+        difference.toFixed(1) +
+        "%"
+
     };
+
   }
 
-  if (difference < -1) {
+
+  if (
+    difference < -1
+  ) {
+
     return {
-      className: "behind",
-      text: "Behind by " + Math.abs(difference).toFixed(1) + "%"
+
+      className:
+        "behind",
+
+      text:
+        "Behind by " +
+        Math.abs(
+          difference
+        ).toFixed(1) +
+        "%"
+
     };
+
   }
+
 
   return {
-    className: "ontrack",
-    text: "On track"
+
+    className:
+      "ontrack",
+
+    text:
+      "On track"
+
   };
+
 }
 
 
@@ -776,138 +1224,168 @@ function getScheduleStatus(
 function renderDashboard() {
 
   const cards =
-    document.getElementById("cards");
+    document.getElementById(
+      "cards"
+    );
 
-  cards.innerHTML = "";
 
-  data.forEach(([label, pct]) => {
+  cards.innerHTML =
+    "";
 
-    pct = clampPercent(pct);
 
-    const card =
-      document.createElement("div");
+  data.forEach(
+    ([label, pct]) => {
 
-    card.className = "card";
 
-    if (usesDoubleRing(label)) {
-
-      const timePercent =
+      pct =
         clampPercent(
-          getTimeElapsedPercent(label)
+          pct
         );
 
-      const schedule =
-        getScheduleStatus(
-          pct,
-          timePercent
+
+      const card =
+        document.createElement(
+          "div"
         );
 
-      card.innerHTML = `
-        <div class="label">
-          ${label}
-        </div>
 
-        <div class="value">
-          ${pct.toFixed(1)}%
-        </div>
+      card.className =
+        "card";
 
-        <div class="double-ring">
+
+      if (
+        usesDoubleRing(
+          label
+        )
+      ) {
+
+
+        const timePercent =
+          clampPercent(
+            getTimeElapsedPercent(
+              label
+            )
+          );
+
+
+        const schedule =
+          getScheduleStatus(
+            pct,
+            timePercent
+          );
+
+
+        card.innerHTML = `
+
+          <div class="label">
+            ${label}
+          </div>
+
+
+          <div class="value">
+            ${pct.toFixed(1)}%
+          </div>
+
+
+          <div class="double-ring">
+
+
+            <div
+              class="invoice-ring"
+              style="--invoice:${pct}">
+            </div>
+
+
+            <div
+              class="time-ring"
+              style="--time:${timePercent}">
+            </div>
+
+
+            <div class="ring-center">
+              ${timePercent.toFixed(0)}%
+            </div>
+
+
+          </div>
+
+
+          <div class="ring-legend">
+
+
+            <div class="legend-item">
+
+              <span
+                class="legend-dot legend-time">
+              </span>
+
+              Time ${timePercent.toFixed(0)}%
+
+            </div>
+
+
+            <div class="legend-item">
+
+              <span
+                class="legend-dot legend-progress">
+              </span>
+
+              Invoice ${pct.toFixed(0)}%
+
+            </div>
+
+
+          </div>
+
 
           <div
-            class="invoice-ring"
-            style="--invoice:${pct}">
+            class="schedule-status ${schedule.className}">
+
+            ${schedule.text}
+
           </div>
 
-          <div
-            class="time-ring"
-            style="--time:${timePercent}">
-          </div>
+        `;
 
-          <div class="ring-center">
-            ${timePercent.toFixed(0)}%
-          </div>
-
-        </div>
-
-        <div class="ring-legend">
-
-          <div class="legend-item">
-            <span class="legend-dot legend-time"></span>
-            Time ${timePercent.toFixed(0)}%
-          </div>
-
-          <div class="legend-item">
-            <span class="legend-dot legend-progress"></span>
-            Invoice ${pct.toFixed(0)}%
-          </div>
-
-        </div>
-
-        <div class="schedule-status ${schedule.className}">
-          ${schedule.text}
-        </div>
-      `;
-
-    } else {
-
-      card.innerHTML = `
-        <div class="label">
-          ${label}
-        </div>
-
-        <div class="value">
-          ${pct.toFixed(1)}%
-        </div>
-
-        <div
-          class="ring"
-          style="--p:${pct}">
-        </div>
-
-        <div class="sub">
-          Progress
-        </div>
-      `;
-    }
-
-    cards.appendChild(card);
-  });
-}
-
-
-/* =========================================================
-   CSV PARSER
-========================================================= */
-
-function parseCSVLine(line) {
-
-  const values = [];
-  let current = "";
-  let quoted = false;
-
-  for (let i = 0; i < line.length; i++) {
-
-    const char = line[i];
-
-    if (char === '"') {
-      if (quoted && line[i + 1] === '"') {
-        current += '"';
-        i++;
-      } else {
-        quoted = !quoted;
       }
-    }
-    else if (char === "," && !quoted) {
-      values.push(current);
-      current = "";
-    }
-    else {
-      current += char;
-    }
-  }
 
-  values.push(current);
-  return values;
+
+      else {
+
+        card.innerHTML = `
+
+          <div class="label">
+            ${label}
+          </div>
+
+
+          <div class="value">
+            ${pct.toFixed(1)}%
+          </div>
+
+
+          <div
+            class="ring"
+            style="--p:${pct}">
+          </div>
+
+
+          <div class="sub">
+            Progress
+          </div>
+
+        `;
+
+      }
+
+
+      cards.appendChild(
+        card
+      );
+
+    }
+  );
+
 }
 
 
@@ -915,37 +1393,68 @@ function parseCSVLine(line) {
    DATA SIGNATURE
 ========================================================= */
 
-function createDataSignature(dataset) {
-  return JSON.stringify(dataset);
+function createDataSignature(
+  dataset
+) {
+
+  return JSON.stringify(
+    dataset
+  );
+
 }
 
 
 /* =========================================================
-   SAVE DISPLAYED DATA LOCALLY
+   SAVE LAST VALID API DATA LOCALLY
 ========================================================= */
 
-function saveCurrentData(dataset) {
+function saveCurrentData(
+  dataset,
+  generatedAt
+) {
 
   try {
+
     localStorage.setItem(
+
       STORAGE_KEY,
-      JSON.stringify({
-        data: dataset,
-        savedAt: Date.now()
-      })
+
+      JSON.stringify(
+        {
+
+          data:
+            dataset,
+
+          generatedAt:
+            generatedAt || "",
+
+          savedAt:
+            Date.now()
+
+        }
+      )
+
     );
+
   }
-  catch (error) {
+
+
+  catch (
+    error
+  ) {
+
     console.warn(
       "Unable to save dashboard data:",
       error
     );
+
   }
+
 }
 
 
 /* =========================================================
-   RESTORE LAST DISPLAYED DATA
+   RESTORE LAST VALID DATA
 ========================================================= */
 
 function restoreCurrentData() {
@@ -953,265 +1462,362 @@ function restoreCurrentData() {
   try {
 
     const saved =
-      localStorage.getItem(STORAGE_KEY);
+      localStorage.getItem(
+        STORAGE_KEY
+      );
 
-    if (!saved) {
+
+    if (
+      !saved
+    ) {
+
       return;
+
     }
 
+
     const parsed =
-      JSON.parse(saved);
+      JSON.parse(
+        saved
+      );
+
 
     if (
       !parsed ||
-      !Array.isArray(parsed.data) ||
+
+      !Array.isArray(
+        parsed.data
+      ) ||
+
       parsed.data.length !== 5
     ) {
+
       return;
+
     }
 
-    data = parsed.data;
+
+    data =
+      parsed.data;
+
 
     currentSignature =
-      createDataSignature(data);
+      createDataSignature(
+        data
+      );
+
+
+    lastApiGeneratedAt =
+      parsed.generatedAt || "";
+
 
     console.log(
-      "Restored last saved dashboard values."
+      "Restored last valid API dashboard data."
     );
 
   }
-  catch (error) {
+
+
+  catch (
+    error
+  ) {
+
     console.warn(
       "Unable to restore dashboard values:",
       error
     );
+
   }
+
 }
 
 
 /* =========================================================
-   APPLY DATA TO DASHBOARD
+   APPLY API DATA
 ========================================================= */
 
-function applyData(newData) {
+function applyData(
+  newData,
+  generatedAt
+) {
 
   const newSignature =
-    createDataSignature(newData);
-
-  if (
-    currentSignature &&
-    newSignature !== currentSignature
-  ) {
-    previousSignature = currentSignature;
-  }
-
-  data = newData;
-  currentSignature = newSignature;
-
-  saveCurrentData(newData);
-  renderDashboard();
-}
-
-
-/* =========================================================
-   PROCESS INCOMING GOOGLE DATA
-
-   FACT-BASED CHANGE:
-   The old code explicitly allowed rollback to the
-   previous dataset after 2 reads.
-
-   This version removes that rollback behavior.
-
-   Rules:
-   1. First valid data -> apply
-   2. Same as current -> keep
-   3. Same as immediately previous -> ignore
-   4. Any other new dataset -> apply immediately
-========================================================= */
-
-function processIncomingData(newData, sync) {
-
-  const incomingSignature =
-    createDataSignature(newData);
-
-  if (!currentSignature) {
-    applyData(newData);
-
-    sync.textContent =
-      "Synced " +
-      new Date().toLocaleTimeString();
-
-    return;
-  }
-
-  if (incomingSignature === currentSignature) {
-    sync.textContent =
-      "Synced " +
-      new Date().toLocaleTimeString();
-
-    return;
-  }
-
-  if (
-    previousSignature &&
-    incomingSignature === previousSignature
-  ) {
-    console.warn(
-      "Previous dataset ignored to prevent rollback."
+    createDataSignature(
+      newData
     );
 
-    sync.textContent =
-      "Synced - previous dataset ignored";
 
-    return;
-  }
+  data =
+    newData;
 
-  applyData(newData);
 
-  sync.textContent =
-    "Updated " +
-    new Date().toLocaleTimeString();
+  currentSignature =
+    newSignature;
+
+
+  lastApiGeneratedAt =
+    generatedAt || "";
+
+
+  saveCurrentData(
+    newData,
+    generatedAt
+  );
+
+
+  renderDashboard();
+
 }
 
 
 /* =========================================================
-   FETCH GOOGLE SHEETS
+   FETCH LIVE DATA FROM APPS SCRIPT
 ========================================================= */
 
 async function fetchSheetData() {
 
+  /*
+    Unique query value prevents the browser
+    from reusing the same request URL.
+  */
+
   const requestUrl =
-    CSV_URL +
-    "&_ts=" + Date.now() +
-    "&_r=" + Math.random().toString(36).slice(2);
+
+    API_URL +
+
+    "?_ts=" +
+
+    Date.now();
+
 
   const response =
-    await fetch(requestUrl, {
-      method: "GET",
-      cache: "no-store",
-      headers: {
-        "Accept": "text/csv,text/plain,*/*"
+    await fetch(
+      requestUrl,
+      {
+
+        method:
+          "GET",
+
+        cache:
+          "no-store"
+
       }
-    });
-
-  if (!response.ok) {
-    throw new Error("HTTP " + response.status);
-  }
-
-  const csvText =
-    await response.text();
-
-  const rows =
-    csvText
-      .replace(/^\uFEFF/, "")
-      .split(/\r?\n/)
-      .filter(Boolean)
-      .map(parseCSVLine);
-
-  const expected =
-    new Map(
-      defaults.map(([name]) => [
-        name.toLowerCase(),
-        name
-      ])
     );
 
-  const found = new Map();
 
-  for (const row of rows) {
+  if (
+    !response.ok
+  ) {
 
-    if (row.length < 2) {
-      continue;
-    }
+    throw new Error(
+      "API HTTP " +
+      response.status
+    );
 
-    const label =
-      String(row[0] || "").trim();
-
-    const key =
-      label.toLowerCase();
-
-    if (!expected.has(key)) {
-      continue;
-    }
-
-    let raw =
-      String(row[1] || "")
-        .trim()
-        .replace("%", "")
-        .trim();
-
-    let value =
-      parseFloat(raw);
-
-    if (Number.isNaN(value)) {
-      continue;
-    }
-
-    if (value > 0 && value <= 1) {
-      value = value * 100;
-    }
-
-    value =
-      Math.round(value * 100) / 100;
-
-    found.set(key, value);
   }
 
-  const newData = [];
 
-  for (const [name] of defaults) {
+  const result =
+    await response.json();
 
-    const key =
-      name.toLowerCase();
 
-    if (!found.has(key)) {
+  if (
+    !result ||
+    result.ok !== true
+  ) {
+
+    throw new Error(
+
+      result &&
+      result.error
+
+        ? result.error
+
+        : "Apps Script API returned an invalid response"
+
+    );
+
+  }
+
+
+  if (
+    !result.metrics ||
+    typeof result.metrics !== "object"
+  ) {
+
+    throw new Error(
+      "Apps Script API response has no metrics object"
+    );
+
+  }
+
+
+  const newData =
+    [];
+
+
+  for (
+    const [name] of defaults
+  ) {
+
+
+    if (
+      !Object.prototype.hasOwnProperty.call(
+        result.metrics,
+        name
+      )
+    ) {
+
       throw new Error(
-        "Missing metric: " + name
+        "Missing API metric: " +
+        name
       );
+
     }
 
-    newData.push([
-      name,
-      found.get(key)
-    ]);
+
+    const value =
+      Number(
+        result.metrics[
+          name
+        ]
+      );
+
+
+    if (
+      !Number.isFinite(
+        value
+      )
+    ) {
+
+      throw new Error(
+        "Invalid API value for " +
+        name
+      );
+
+    }
+
+
+    newData.push(
+      [
+
+        name,
+
+        clampPercent(
+          value
+        )
+
+      ]
+    );
+
   }
 
-  return newData;
+
+  return {
+
+    data:
+      newData,
+
+    generatedAt:
+      result.generatedAt || ""
+
+  };
+
 }
 
 
 /* =========================================================
-   LOAD GOOGLE SHEET
+   LOAD GOOGLE SHEET THROUGH API
 ========================================================= */
 
 async function loadSheet() {
 
   const sync =
-    document.getElementById("sync");
+    document.getElementById(
+      "sync"
+    );
+
 
   try {
 
-    const newData =
+    const apiResult =
       await fetchSheetData();
 
-    processIncomingData(
-      newData,
-      sync
-    );
+
+    const newData =
+      apiResult.data;
+
+
+    const newSignature =
+      createDataSignature(
+        newData
+      );
+
+
+    /*
+      Only redraw when values actually changed.
+    */
+
+    if (
+      newSignature !==
+      currentSignature
+    ) {
+
+      applyData(
+        newData,
+        apiResult.generatedAt
+      );
+
+
+      sync.textContent =
+        "Updated " +
+        new Date()
+          .toLocaleTimeString();
+
+    }
+
+
+    else {
+
+      lastApiGeneratedAt =
+        apiResult.generatedAt || "";
+
+
+      sync.textContent =
+        "Live sync " +
+        new Date()
+          .toLocaleTimeString();
+
+    }
 
   }
-  catch (error) {
+
+
+  catch (
+    error
+  ) {
 
     console.error(
-      "Google Sheets sync error:",
+      "Apps Script API sync error:",
       error
     );
 
+
+    /*
+      If the API or internet temporarily fails,
+      keep the last valid figures on screen.
+    */
+
     sync.innerHTML =
+
       '<span id="error">' +
-      'Sync unavailable - showing last known data' +
+
+      'API sync unavailable - showing last known data' +
+
       '</span>';
+
   }
+
 }
 
 
@@ -1220,25 +1826,65 @@ async function loadSheet() {
 ========================================================= */
 
 function updateClock() {
-  document.getElementById("clock").textContent =
-    new Date().toLocaleString();
+
+  document
+    .getElementById(
+      "clock"
+    )
+    .textContent =
+
+      new Date()
+        .toLocaleString();
+
 }
 
-setInterval(updateClock, 1000);
+
+setInterval(
+  updateClock,
+  1000
+);
 
 
 /* =========================================================
    START SIGNAGE
 ========================================================= */
 
+/*
+  Restore last valid figures immediately
+  after browser/PC restart.
+*/
+
 restoreCurrentData();
+
+
 renderDashboard();
+
+
+/*
+  Fetch live API immediately.
+*/
+
 loadSheet();
-setInterval(loadSheet, REFRESH_MS);
+
+
+/*
+  Then check Apps Script every 10 seconds.
+*/
+
+setInterval(
+  loadSheet,
+  REFRESH_MS
+);
+
+
 updateClock();
+
+
 playCurrentAd();
+
 
 </script>
 
 </body>
+
 </html>

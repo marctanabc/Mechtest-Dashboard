@@ -30,10 +30,8 @@ body {
 .stage {
   width: 100vw;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
-
   background: #07121f;
 }
 
@@ -45,7 +43,6 @@ body {
 #videoArea {
   width: 100%;
   height: 65vh;
-
   background: #000;
 
   display: flex;
@@ -523,19 +520,22 @@ const REFRESH_MS = 10000;
 
 
 /*
-  A changed dataset must be returned
-  3 consecutive times before it is accepted.
+  If Google suddenly returns the immediately
+  previous dataset, require TWO consecutive
+  identical reads before allowing a rollback.
 
-  This prevents one stale Google response
-  from changing the workshop dashboard.
+  This protects against:
+  17% -> 20% -> stale 17% -> 20%
+
+  But still allows a genuine correction:
+  20% -> 17% -> 17%
 */
 
-const REQUIRED_CONFIRMATIONS = 3;
+const REVERT_CONFIRMATIONS = 2;
 
 
 /*
-  Browser storage key used to preserve
-  the last confirmed workshop figures.
+  Browser storage key.
 */
 
 const STORAGE_KEY =
@@ -569,13 +569,16 @@ let data =
    ANTI-STALE STATE
 ========================================================= */
 
-let confirmedSignature =
+let currentSignature =
   "";
 
-let candidateSignature =
+let previousSignature =
   "";
 
-let candidateCount =
+let revertCandidateSignature =
+  "";
+
+let revertCandidateCount =
   0;
 
 
@@ -594,7 +597,8 @@ const signagePlaylist = [
 ];
 
 
-let currentVideoIndex = 0;
+let currentVideoIndex =
+  0;
 
 
 const signageVideo =
@@ -624,22 +628,17 @@ function playCurrentAd() {
 
   signageVideo.pause();
 
-
   signageVideo.src =
     videoUrl;
-
 
   signageVideo.currentTime =
     0;
 
-
   signageVideo.muted =
     false;
 
-
   signageVideo.volume =
     1;
-
 
   signageVideo.load();
 
@@ -768,7 +767,9 @@ signageVideo.addEventListener(
    PERCENTAGE HELPER
 ========================================================= */
 
-function clampPercent(value) {
+function clampPercent(
+  value
+) {
 
   return Math.max(
     0,
@@ -816,16 +817,12 @@ function getMonthElapsedPercent() {
     );
 
 
-  const elapsed =
-    now - start;
-
-
-  const total =
-    end - start;
-
-
   return clampPercent(
-    (elapsed / total) * 100
+    (
+      (now - start) /
+      (end - start)
+    ) *
+    100
   );
 
 }
@@ -835,7 +832,6 @@ function getMonthElapsedPercent() {
 /* =========================================================
    FISCAL QUARTER TIME ELAPSED
 
-   MECHTEST:
    Q1 = JUL - SEP
    Q2 = OCT - DEC
    Q3 = JAN - MAR
@@ -865,8 +861,11 @@ function getQuarterElapsedPercent() {
     month <= 8
   ) {
 
-    quarterStartMonth = 6;
-    quarterStartYear = year;
+    quarterStartMonth =
+      6;
+
+    quarterStartYear =
+      year;
 
   }
 
@@ -875,8 +874,11 @@ function getQuarterElapsedPercent() {
     month <= 11
   ) {
 
-    quarterStartMonth = 9;
-    quarterStartYear = year;
+    quarterStartMonth =
+      9;
+
+    quarterStartYear =
+      year;
 
   }
 
@@ -885,15 +887,21 @@ function getQuarterElapsedPercent() {
     month <= 2
   ) {
 
-    quarterStartMonth = 0;
-    quarterStartYear = year;
+    quarterStartMonth =
+      0;
+
+    quarterStartYear =
+      year;
 
   }
 
   else {
 
-    quarterStartMonth = 3;
-    quarterStartYear = year;
+    quarterStartMonth =
+      3;
+
+    quarterStartYear =
+      year;
 
   }
 
@@ -926,7 +934,8 @@ function getQuarterElapsedPercent() {
     (
       (now - start) /
       (end - start)
-    ) * 100
+    ) *
+    100
   );
 
 }
@@ -936,7 +945,7 @@ function getQuarterElapsedPercent() {
 /* =========================================================
    FISCAL YEAR TIME ELAPSED
 
-   JULY 1 → JUNE 30
+   JULY 1 -> JUNE 30
 ========================================================= */
 
 function getFiscalYearElapsedPercent() {
@@ -1001,7 +1010,8 @@ function getFiscalYearElapsedPercent() {
     (
       (now - start) /
       (end - start)
-    ) * 100
+    ) *
+    100
   );
 
 }
@@ -1016,7 +1026,9 @@ function getTimeElapsedPercent(
   label
 ) {
 
-  switch (label) {
+  switch (
+    label
+  ) {
 
     case "Monthly Target":
 
@@ -1268,7 +1280,6 @@ function renderDashboard() {
 
       }
 
-
       else {
 
         card.innerHTML = `
@@ -1403,7 +1414,7 @@ function parseCSVLine(
 
 
 /* =========================================================
-   CREATE DATA SIGNATURE
+   DATA SIGNATURE
 ========================================================= */
 
 function createDataSignature(
@@ -1419,10 +1430,10 @@ function createDataSignature(
 
 
 /* =========================================================
-   SAVE CONFIRMED DATA LOCALLY
+   SAVE DISPLAYED DATA LOCALLY
 ========================================================= */
 
-function saveConfirmedData(
+function saveCurrentData(
   dataset
 ) {
 
@@ -1444,10 +1455,12 @@ function saveConfirmedData(
 
   }
 
-  catch (error) {
+  catch (
+    error
+  ) {
 
     console.warn(
-      "Unable to save confirmed dashboard data:",
+      "Unable to save dashboard data:",
       error
     );
 
@@ -1458,10 +1471,10 @@ function saveConfirmedData(
 
 
 /* =========================================================
-   RESTORE LAST CONFIRMED DATA
+   RESTORE LAST DISPLAYED DATA
 ========================================================= */
 
-function restoreConfirmedData() {
+function restoreCurrentData() {
 
   try {
 
@@ -1503,22 +1516,24 @@ function restoreConfirmedData() {
       parsed.data;
 
 
-    confirmedSignature =
+    currentSignature =
       createDataSignature(
         data
       );
 
 
     console.log(
-      "Restored last confirmed dashboard data."
+      "Restored last saved dashboard values."
     );
 
   }
 
-  catch (error) {
+  catch (
+    error
+  ) {
 
     console.warn(
-      "Unable to restore dashboard cache:",
+      "Unable to restore dashboard values:",
       error
     );
 
@@ -1529,32 +1544,54 @@ function restoreConfirmedData() {
 
 
 /* =========================================================
-   APPLY CONFIRMED DATA
+   APPLY DATA TO DASHBOARD
 ========================================================= */
 
-function applyConfirmedData(
+function applyData(
   newData
 ) {
 
-  data =
-    newData;
-
-
-  confirmedSignature =
+  const newSignature =
     createDataSignature(
       newData
     );
 
 
-  candidateSignature =
+  /*
+    Remember the dataset we are replacing.
+
+    This lets us recognise a stale rollback.
+  */
+
+  if (
+    currentSignature &&
+    newSignature !==
+      currentSignature
+  ) {
+
+    previousSignature =
+      currentSignature;
+
+  }
+
+
+  data =
+    newData;
+
+
+  currentSignature =
+    newSignature;
+
+
+  revertCandidateSignature =
     "";
 
 
-  candidateCount =
+  revertCandidateCount =
     0;
 
 
-  saveConfirmedData(
+  saveCurrentData(
     newData
   );
 
@@ -1566,13 +1603,25 @@ function applyConfirmedData(
 
 
 /* =========================================================
-   PROCESS POSSIBLE UPDATED DATA
+   PROCESS INCOMING GOOGLE DATA
 
-   IMPORTANT:
-   Changed values are NOT displayed immediately.
+   STRATEGY:
 
-   They must be returned by Google
-   three consecutive times first.
+   1. Brand-new data:
+      Apply immediately.
+
+   2. Same data:
+      Keep it.
+
+   3. Google suddenly returns the immediately
+      previous dataset:
+      Do not revert immediately.
+
+      Require the same previous dataset TWO
+      consecutive times before accepting it.
+
+   This prevents stale flip-flopping while still
+   allowing a genuine downward correction.
 ========================================================= */
 
 function processIncomingData(
@@ -1580,24 +1629,21 @@ function processIncomingData(
   sync
 ) {
 
-  const newSignature =
+  const incomingSignature =
     createDataSignature(
       newData
     );
 
 
-  /*
-    No confirmed dataset yet.
-
-    First valid Google response becomes
-    the initial confirmed dataset.
-  */
+  /* =====================================================
+     FIRST VALID GOOGLE DATA
+  ===================================================== */
 
   if (
-    !confirmedSignature
+    !currentSignature
   ) {
 
-    applyConfirmedData(
+    applyData(
       newData
     );
 
@@ -1613,23 +1659,20 @@ function processIncomingData(
   }
 
 
-  /*
-    Google returned the SAME dataset
-    currently displayed.
-
-    Nothing needs to change.
-  */
+  /* =====================================================
+     SAME AS CURRENT DATA
+  ===================================================== */
 
   if (
-    newSignature ===
-    confirmedSignature
+    incomingSignature ===
+    currentSignature
   ) {
 
-    candidateSignature =
+    revertCandidateSignature =
       "";
 
 
-    candidateCount =
+    revertCandidateCount =
       0;
 
 
@@ -1644,58 +1687,84 @@ function processIncomingData(
   }
 
 
-  /*
-    Google returned a different dataset.
+  /* =====================================================
+     POSSIBLE STALE ROLLBACK
 
-    Start / continue verification.
-  */
+     Example:
 
-  if (
-    newSignature ===
-    candidateSignature
-  ) {
+     Current = 20%
+     Previous = 17%
 
-    candidateCount++;
+     Google returns 17%.
 
-  }
-
-  else {
-
-    candidateSignature =
-      newSignature;
-
-
-    candidateCount =
-      1;
-
-  }
-
-
-  console.log(
-    "Potential Google Sheets update detected:",
-    candidateCount +
-    "/" +
-    REQUIRED_CONFIRMATIONS
-  );
-
-
-  /*
-    Do NOT update the workshop display
-    until the changed data has been
-    confirmed multiple times.
-  */
+     Do not immediately revert.
+  ===================================================== */
 
   if (
-    candidateCount <
-    REQUIRED_CONFIRMATIONS
+    incomingSignature ===
+    previousSignature
   ) {
+
+
+    if (
+      incomingSignature ===
+      revertCandidateSignature
+    ) {
+
+      revertCandidateCount++;
+
+    }
+
+    else {
+
+      revertCandidateSignature =
+        incomingSignature;
+
+
+      revertCandidateCount =
+        1;
+
+    }
+
+
+    console.warn(
+      "Possible stale rollback detected:",
+      revertCandidateCount +
+      "/" +
+      REVERT_CONFIRMATIONS
+    );
+
+
+    if (
+      revertCandidateCount <
+      REVERT_CONFIRMATIONS
+    ) {
+
+      sync.textContent =
+        "Checking latest Google Sheets data...";
+
+
+      return;
+
+    }
+
+
+    /*
+      Previous dataset appeared twice
+      consecutively.
+
+      Treat this as a genuine correction.
+    */
+
+    applyData(
+      newData
+    );
+
 
     sync.textContent =
-      "Verifying latest Google Sheets data " +
-      candidateCount +
-      "/" +
-      REQUIRED_CONFIRMATIONS +
-      "...";
+      "Updated " +
+      new Date()
+        .toLocaleTimeString();
 
 
     return;
@@ -1703,20 +1772,19 @@ function processIncomingData(
   }
 
 
-  /*
-    Same changed dataset has now been
-    returned consistently.
+  /* =====================================================
+     COMPLETELY NEW DATA
 
-    Accept it as the new confirmed state.
-  */
+     Apply immediately.
+  ===================================================== */
 
-  applyConfirmedData(
+  applyData(
     newData
   );
 
 
   sync.textContent =
-    "Updated & verified " +
+    "Updated " +
     new Date()
       .toLocaleTimeString();
 
@@ -1725,16 +1793,14 @@ function processIncomingData(
 
 
 /* =========================================================
-   FETCH GOOGLE SHEETS DATA
+   FETCH GOOGLE SHEETS
 ========================================================= */
 
 async function fetchSheetData() {
 
   /*
-    Add multiple unique values so every
-    request has a different URL.
-
-    Browser caching is also disabled.
+    Unique query parameters help avoid
+    normal browser/CDN caching.
   */
 
   const requestUrl =
@@ -1754,6 +1820,7 @@ async function fetchSheetData() {
     await fetch(
       requestUrl,
       {
+
         method:
           "GET",
 
@@ -1761,9 +1828,12 @@ async function fetchSheetData() {
           "no-store",
 
         headers: {
+
           "Accept":
             "text/csv,text/plain,*/*"
+
         }
+
       }
     );
 
@@ -1821,8 +1891,8 @@ async function fetchSheetData() {
     );
 
 
-  const newData =
-    [];
+  const found =
+    new Map();
 
 
   for (
@@ -1895,7 +1965,6 @@ async function fetchSheetData() {
 
     /*
       Google may return:
-
       70%
       OR
       0.7
@@ -1918,31 +1987,54 @@ async function fetchSheetData() {
       ) / 100;
 
 
-    newData.push(
-      [
-
-        expected.get(
-          key
-        ),
-
-        value
-
-      ]
+    found.set(
+      key,
+      value
     );
 
   }
 
 
-  if (
-    newData.length !== 5
+  /*
+    Build the data in a fixed known order.
+
+    This prevents row-order differences in
+    Google Sheets from looking like a new dataset.
+  */
+
+  const newData =
+    [];
+
+
+  for (
+    const [name] of defaults
   ) {
 
-    throw new Error(
+    const key =
+      name.toLowerCase();
 
-      "Expected 5 metrics, found " +
 
-      newData.length
+    if (
+      !found.has(
+        key
+      )
+    ) {
 
+      throw new Error(
+        "Missing metric: " +
+        name
+      );
+
+    }
+
+
+    newData.push(
+      [
+        name,
+        found.get(
+          key
+        )
+      ]
     );
 
   }
@@ -1968,10 +2060,6 @@ async function loadSheet() {
 
   try {
 
-    sync.textContent =
-      "Checking Google Sheets...";
-
-
     const newData =
       await fetchSheetData();
 
@@ -1984,7 +2072,9 @@ async function loadSheet() {
   }
 
 
-  catch (error) {
+  catch (
+    error
+  ) {
 
     console.error(
       "Google Sheets sync error:",
@@ -1994,19 +2084,16 @@ async function loadSheet() {
 
     /*
       IMPORTANT:
-
-      Do not replace the dashboard values
-      when Google Sheets cannot be reached.
-
-      Keep displaying the last confirmed
-      workshop figures.
+      Never replace valid workshop figures
+      with defaults or blank values just because
+      Google temporarily cannot be reached.
     */
 
     sync.innerHTML =
 
       '<span id="error">' +
 
-      'Sync unavailable - showing last confirmed data' +
+      'Sync unavailable - showing last known data' +
 
       '</span>';
 
@@ -2046,11 +2133,14 @@ setInterval(
 ========================================================= */
 
 /*
-  Restore last known confirmed figures
-  BEFORE rendering anything.
+  Restore last displayed values first.
+
+  This prevents the dashboard from briefly
+  showing fake/default 100% figures after
+  refresh or PC restart.
 */
 
-restoreConfirmedData();
+restoreCurrentData();
 
 
 renderDashboard();

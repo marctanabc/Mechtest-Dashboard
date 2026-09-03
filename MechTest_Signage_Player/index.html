@@ -47,14 +47,14 @@ body {
 /* =========================================================
    TOP MEDIA AREA
 
-   LEFT  = Announcements + Holidays
+   LEFT   = Announcements + Holidays
    CENTRE = Video
-   RIGHT = Jobs in Progress
+   RIGHT  = Jobs in Progress
 ========================================================= */
 
 #mediaArea {
   width: 100%;
-  height: 65vh;
+  height: 70vh;
 
   display: grid;
 
@@ -93,7 +93,7 @@ body {
   display: grid;
 
   grid-template-rows:
-    58% 42%;
+    56% 44%;
 
   overflow: hidden;
 }
@@ -105,7 +105,7 @@ body {
 
 .info-section {
   padding:
-    2vh
+    1.8vh
     1.15vw;
 
   overflow: hidden;
@@ -131,7 +131,7 @@ body {
 }
 
 .info-subtitle {
-  margin-top: .35vh;
+  margin-top: .3vh;
 
   font-size: .58vw;
 
@@ -146,12 +146,12 @@ body {
 ========================================================= */
 
 #announcementList {
-  margin-top: 1.6vh;
+  margin-top: 1.35vh;
 
   display: flex;
   flex-direction: column;
 
-  gap: 1.1vh;
+  gap: .9vh;
 }
 
 .announcement-item {
@@ -159,9 +159,9 @@ body {
 
   align-items: flex-start;
 
-  gap: .55vw;
+  gap: .5vw;
 
-  padding-bottom: .8vh;
+  padding-bottom: .65vh;
 
   border-bottom:
     1px solid
@@ -169,10 +169,10 @@ body {
 }
 
 .announcement-icon {
-  width: .45vw;
-  height: .45vw;
+  width: .42vw;
+  height: .42vw;
 
-  min-width: .45vw;
+  min-width: .42vw;
 
   margin-top: .3vh;
 
@@ -182,9 +182,9 @@ body {
 }
 
 .announcement-text {
-  font-size: .67vw;
+  font-size: .65vw;
 
-  line-height: 1.35;
+  line-height: 1.3;
 
   font-weight: 600;
 
@@ -197,12 +197,12 @@ body {
 ========================================================= */
 
 #holidayList {
-  margin-top: 1.3vh;
+  margin-top: 1.05vh;
 
   display: flex;
   flex-direction: column;
 
-  gap: .9vh;
+  gap: .7vh;
 }
 
 .holiday-item {
@@ -211,9 +211,9 @@ body {
   justify-content: space-between;
   align-items: center;
 
-  gap: .6vw;
+  gap: .55vw;
 
-  padding-bottom: .7vh;
+  padding-bottom: .55vh;
 
   border-bottom:
     1px solid
@@ -223,9 +223,9 @@ body {
 .holiday-name {
   min-width: 0;
 
-  font-size: .64vw;
+  font-size: .62vw;
 
-  line-height: 1.2;
+  line-height: 1.15;
 
   font-weight: 600;
 
@@ -239,7 +239,7 @@ body {
 }
 
 .holiday-date {
-  font-size: .65vw;
+  font-size: .63vw;
 
   font-weight: 800;
 
@@ -247,9 +247,9 @@ body {
 }
 
 .holiday-days {
-  margin-top: .15vh;
+  margin-top: .1vh;
 
-  font-size: .48vw;
+  font-size: .46vw;
 
   color: #8ea6bd;
 }
@@ -260,9 +260,9 @@ body {
 ========================================================= */
 
 .empty-message {
-  margin-top: 2vh;
+  margin-top: 1.5vh;
 
-  font-size: .62vw;
+  font-size: .6vw;
 
   text-align: center;
 
@@ -293,7 +293,7 @@ body {
   width: 100%;
   height: 100%;
 
-  object-fit: cover;
+  object-fit: contain;
   object-position: center center;
 
   background: #000;
@@ -311,9 +311,9 @@ body {
   height: 100%;
 
   padding:
-    2.2vh
+    2vh
     1.1vw
-    1.6vh;
+    1.4vh;
 
   background:
     linear-gradient(
@@ -353,9 +353,9 @@ body {
 }
 
 .jobs-subtitle {
-  margin-top: .35vh;
+  margin-top: .3vh;
 
-  font-size: .62vw;
+  font-size: .6vw;
 
   color: #8ea6bd;
 
@@ -369,14 +369,14 @@ body {
 
 .jobs-total-wrap {
   margin:
-    1.3vh 0
-    1.4vh;
+    1.1vh 0
+    1.1vh;
 
   text-align: center;
 }
 
 .jobs-total {
-  font-size: 3.1vw;
+  font-size: 2.9vw;
   line-height: 1;
 
   font-weight: 900;
@@ -385,9 +385,9 @@ body {
 }
 
 .jobs-total-label {
-  margin-top: .4vh;
+  margin-top: .35vh;
 
-  font-size: .67vw;
+  font-size: .64vw;
 
   font-weight: 700;
 
@@ -411,7 +411,7 @@ body {
   background:
     rgba(255,255,255,.12);
 
-  margin-bottom: 1.3vh;
+  margin-bottom: 1vh;
 }
 
 
@@ -429,7 +429,7 @@ body {
 
   justify-content: flex-start;
 
-  gap: 1.15vh;
+  gap: .95vh;
 
   overflow: hidden;
 }
@@ -450,7 +450,7 @@ body {
 .job-name {
   min-width: 0;
 
-  font-size: .68vw;
+  font-size: .66vw;
   line-height: 1.15;
 
   font-weight: 600;
@@ -461,7 +461,7 @@ body {
 .job-count {
   flex-shrink: 0;
 
-  font-size: .95vw;
+  font-size: .9vw;
   line-height: 1;
 
   font-weight: 800;
@@ -476,9 +476,9 @@ body {
 
 .job-bar {
   width: 100%;
-  height: .35vh;
+  height: .32vh;
 
-  margin-top: .45vh;
+  margin-top: .4vh;
 
   border-radius: 999px;
 
@@ -512,9 +512,9 @@ body {
 ========================================================= */
 
 .jobs-live {
-  margin-top: 1vh;
+  margin-top: .8vh;
 
-  padding-top: 1vh;
+  padding-top: .8vh;
 
   border-top:
     1px solid
@@ -527,14 +527,14 @@ body {
 
   gap: .35vw;
 
-  font-size: .55vw;
+  font-size: .52vw;
 
   color: #7f96ab;
 }
 
 .jobs-live-dot {
-  width: .4vw;
-  height: .4vw;
+  width: .38vw;
+  height: .38vw;
 
   border-radius: 50%;
 
@@ -548,7 +548,7 @@ body {
 
 #dashboard {
   width: 100%;
-  height: 35vh;
+  height: 30vh;
 
   background:
     linear-gradient(
@@ -559,7 +559,7 @@ body {
 
   color: #102642;
 
-  padding: 1.2vh 2vw;
+  padding: .75vh 2vw;
 
   overflow: hidden;
 }
@@ -574,17 +574,17 @@ body {
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 1vh;
+  margin-bottom: .45vh;
 }
 
 .title {
-  font-size: 1.7vw;
+  font-size: 1.45vw;
   font-weight: 800;
   letter-spacing: .02em;
 }
 
 .sub {
-  font-size: .8vw;
+  font-size: .7vw;
   color: #5c6f85;
 }
 
@@ -600,7 +600,7 @@ body {
 }
 
 .logo-wrap img {
-  height: 4.5vh;
+  height: 3.7vh;
   width: auto;
   max-width: 14vw;
 
@@ -620,7 +620,7 @@ body {
   grid-template-columns:
     repeat(5, 1fr);
 
-  gap: 1vw;
+  gap: .8vw;
 }
 
 
@@ -631,22 +631,22 @@ body {
 .card {
   background: white;
 
-  border-radius: .8vw;
+  border-radius: .7vw;
 
-  padding: .65vw .55vw;
+  padding: .38vw .45vw;
 
   text-align: center;
 
   box-shadow:
-    0 6px 16px
+    0 4px 12px
     rgba(18,45,75,.10);
 }
 
 .label {
-  font-size: .8vw;
+  font-size: .72vw;
   font-weight: 700;
 
-  min-height: 2.2em;
+  min-height: 1.8em;
 
   display: flex;
   align-items: center;
@@ -654,12 +654,12 @@ body {
 }
 
 .value {
-  font-size: 1.55vw;
+  font-size: 1.3vw;
   font-weight: 800;
 
   margin:
-    .15vw 0
-    .2vw;
+    .08vw 0
+    .12vw;
 
   color: #159447;
 }
@@ -672,13 +672,13 @@ body {
 .ring {
   --p: 0;
 
-  width: 4vw;
-  height: 4vw;
+  width: 3.3vw;
+  height: 3.3vw;
 
   border-radius: 50%;
 
   margin:
-    0 auto .3vw;
+    0 auto .15vw;
 
   background:
     conic-gradient(
@@ -696,7 +696,7 @@ body {
 
   position: absolute;
 
-  inset: .55vw;
+  inset: .45vw;
 
   border-radius: 50%;
 
@@ -711,12 +711,12 @@ body {
 .double-ring {
   position: relative;
 
-  width: 5.2vw;
-  height: 5.2vw;
+  width: 4.25vw;
+  height: 4.25vw;
 
   margin:
-    .1vw auto
-    .15vw;
+    .02vw auto
+    .08vw;
 }
 
 
@@ -749,7 +749,7 @@ body {
 
   position: absolute;
 
-  inset: .42vw;
+  inset: .36vw;
 
   border-radius: 50%;
 
@@ -766,7 +766,7 @@ body {
 
   position: absolute;
 
-  inset: .82vw;
+  inset: .67vw;
 
   border-radius: 50%;
 
@@ -786,7 +786,7 @@ body {
 
   position: absolute;
 
-  inset: .42vw;
+  inset: .34vw;
 
   border-radius: 50%;
 
@@ -809,7 +809,7 @@ body {
 
   z-index: 5;
 
-  font-size: .72vw;
+  font-size: .64vw;
   font-weight: 800;
 
   color: #7393b3;
@@ -821,15 +821,15 @@ body {
 ========================================================= */
 
 .ring-legend {
-  margin-top: .1vw;
+  margin-top: .05vw;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  gap: .55vw;
+  gap: .45vw;
 
-  font-size: .57vw;
+  font-size: .52vw;
 
   color: #607489;
 }
@@ -838,12 +838,12 @@ body {
   display: flex;
   align-items: center;
 
-  gap: .18vw;
+  gap: .16vw;
 }
 
 .legend-dot {
-  width: .42vw;
-  height: .42vw;
+  width: .36vw;
+  height: .36vw;
 
   border-radius: 50%;
 }
@@ -862,9 +862,9 @@ body {
 ========================================================= */
 
 .schedule-status {
-  margin-top: .18vw;
+  margin-top: .08vw;
 
-  font-size: .66vw;
+  font-size: .6vw;
   font-weight: 800;
 }
 
@@ -886,7 +886,7 @@ body {
 ========================================================= */
 
 .foot {
-  margin-top: .6vh;
+  margin-top: .18vh;
 
   display: flex;
   justify-content: space-between;
@@ -894,19 +894,19 @@ body {
 
   color: #607489;
 
-  font-size: .7vw;
+  font-size: .6vw;
 }
 
 .status {
   display: flex;
   align-items: center;
 
-  gap: .4vw;
+  gap: .35vw;
 }
 
 .dot {
-  width: .45vw;
-  height: .45vw;
+  width: .4vw;
+  height: .4vw;
 
   border-radius: 50%;
 
@@ -1997,11 +1997,6 @@ function renderAnnouncements() {
 
 /* =========================================================
    HOLIDAY DATE PARSER
-
-   Expected format:
-   5 Oct 2026
-   25 Dec 2026
-   1 Jan 2027
 ========================================================= */
 
 function parseHolidayDate(
@@ -2098,9 +2093,6 @@ function parseHolidayDate(
 
 /* =========================================================
    HOLIDAY DISPLAY FORMAT
-
-   Australian style:
-   5 Oct 2026
 ========================================================= */
 
 function formatHolidayDate(

@@ -45,12 +45,35 @@ body {
 
 
 /* =========================================================
+   TOP MEDIA AREA
+   VIDEO + JOBS IN PROGRESS
+========================================================= */
+
+#mediaArea {
+  width: 100%;
+  height: 65vh;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    18vw;
+
+  background: #000;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
    VIDEO AREA
 ========================================================= */
 
 #videoArea {
   width: 100%;
-  height: 65vh;
+  height: 100%;
+
+  min-width: 0;
 
   background: #000;
 
@@ -68,6 +91,246 @@ body {
   object-fit: contain;
 
   background: #000;
+}
+
+
+/* =========================================================
+   JOBS IN PROGRESS PANEL
+========================================================= */
+
+#jobsPanel {
+  width: 18vw;
+  height: 100%;
+
+  padding:
+    2.2vh
+    1.1vw
+    1.6vh;
+
+  background:
+    linear-gradient(
+      180deg,
+      #07121f 0%,
+      #0b1d30 100%
+    );
+
+  border-left:
+    1px solid
+    rgba(255,255,255,.10);
+
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   JOBS PANEL HEADER
+========================================================= */
+
+.jobs-title {
+  font-size: 1.05vw;
+  font-weight: 800;
+
+  letter-spacing: .07em;
+
+  color: #ffffff;
+
+  text-transform: uppercase;
+
+  text-align: center;
+}
+
+.jobs-subtitle {
+  margin-top: .35vh;
+
+  font-size: .62vw;
+
+  color: #8ea6bd;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   TOTAL ACTIVE JOBS
+========================================================= */
+
+.jobs-total-wrap {
+  margin:
+    1.3vh 0
+    1.4vh;
+
+  text-align: center;
+}
+
+.jobs-total {
+  font-size: 3.1vw;
+  line-height: 1;
+
+  font-weight: 900;
+
+  color: #22b455;
+}
+
+.jobs-total-label {
+  margin-top: .4vh;
+
+  font-size: .67vw;
+
+  font-weight: 700;
+
+  color: #a9bbcc;
+
+  text-transform: uppercase;
+
+  letter-spacing: .05em;
+}
+
+
+/* =========================================================
+   JOBS DIVIDER
+========================================================= */
+
+.jobs-divider {
+  height: 1px;
+
+  width: 100%;
+
+  background:
+    rgba(255,255,255,.12);
+
+  margin-bottom: 1.3vh;
+}
+
+
+/* =========================================================
+   JOB LIST
+========================================================= */
+
+#jobsList {
+  width: 100%;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-start;
+
+  gap: 1.15vh;
+
+  overflow: hidden;
+}
+
+.job-item {
+  width: 100%;
+}
+
+.job-row {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: .6vw;
+}
+
+.job-name {
+  min-width: 0;
+
+  font-size: .68vw;
+  line-height: 1.15;
+
+  font-weight: 600;
+
+  color: #e8f0f7;
+}
+
+.job-count {
+  flex-shrink: 0;
+
+  font-size: .95vw;
+  line-height: 1;
+
+  font-weight: 800;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   JOB WORKLOAD BAR
+========================================================= */
+
+.job-bar {
+  width: 100%;
+  height: .35vh;
+
+  margin-top: .45vh;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,.10);
+
+  overflow: hidden;
+}
+
+.job-bar-fill {
+  height: 100%;
+
+  min-width: 0;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #159447,
+      #22b455
+    );
+
+  transition:
+    width .4s ease;
+}
+
+
+/* =========================================================
+   JOBS LIVE STATUS
+========================================================= */
+
+.jobs-live {
+  margin-top: 1vh;
+
+  padding-top: 1vh;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.08);
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: .35vw;
+
+  font-size: .55vw;
+
+  color: #7f96ab;
+}
+
+.jobs-live-dot {
+  width: .4vw;
+  height: .4vw;
+
+  border-radius: 50%;
+
+  background: #22b455;
 }
 
 
@@ -461,17 +724,82 @@ body {
 
 
   <!-- =====================================================
-       VIDEO ADS
+       TOP MEDIA AREA
+       VIDEO + JOBS IN PROGRESS
   ====================================================== -->
 
-  <div id="videoArea">
+  <div id="mediaArea">
 
-    <video
-      id="signageVideo"
-      autoplay
-      playsinline
-      preload="auto">
-    </video>
+
+    <!-- ===================================================
+         VIDEO ADS
+    ==================================================== -->
+
+    <div id="videoArea">
+
+      <video
+        id="signageVideo"
+        autoplay
+        playsinline
+        preload="auto">
+      </video>
+
+    </div>
+
+
+    <!-- ===================================================
+         JOBS IN PROGRESS
+    ==================================================== -->
+
+    <aside id="jobsPanel">
+
+
+      <div class="jobs-title">
+        Jobs in Progress
+      </div>
+
+
+      <div class="jobs-subtitle">
+        Current active workload
+      </div>
+
+
+      <div class="jobs-total-wrap">
+
+        <div
+          class="jobs-total"
+          id="jobsTotal">
+
+          0
+
+        </div>
+
+        <div class="jobs-total-label">
+          Total Active Jobs
+        </div>
+
+      </div>
+
+
+      <div class="jobs-divider"></div>
+
+
+      <div id="jobsList"></div>
+
+
+      <div class="jobs-live">
+
+        <span class="jobs-live-dot"></span>
+
+        <span>
+          Live from Google Sheets
+        </span>
+
+      </div>
+
+
+    </aside>
+
 
   </div>
 
@@ -552,7 +880,7 @@ body {
 ========================================================= */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbwVIlg1d8rbSFxSZ4xW25DuSh9Nxww7jGrVzEw775SIr81n8M8dv7kk0thkkEKHpOnI/exec";
+  "https://script.google.com/macros/s/AKfycbyPPC5ODQA1QdqN8P7pc4lJvd4vR2fJTzFcSoMfKr8F_F3F1Iotc1hInjBKJXJ1xrIL/exec";
 
 
 /*
@@ -597,6 +925,44 @@ const defaults = [
 
 let data =
   defaults.slice();
+
+
+/* =========================================================
+   JOBS IN PROGRESS DEFAULTS
+========================================================= */
+
+const jobsOrder = [
+
+  "Materials Testing",
+
+  "Mechanical Engineering",
+
+  "CCS",
+
+  "FACE Consulting",
+
+  "NDTIC"
+
+];
+
+
+let jobsInProgress = {
+
+  "CCS": 0,
+
+  "FACE Consulting": 0,
+
+  "Materials Testing": 0,
+
+  "Mechanical Engineering": 0,
+
+  "NDTIC": 0
+
+};
+
+
+let totalJobsInProgress =
+  0;
 
 
 /* =========================================================
@@ -1218,7 +1584,7 @@ function getScheduleStatus(
 
 
 /* =========================================================
-   DASHBOARD RENDER
+   SALES DASHBOARD RENDER
 ========================================================= */
 
 function renderDashboard() {
@@ -1390,15 +1756,177 @@ function renderDashboard() {
 
 
 /* =========================================================
+   JOBS IN PROGRESS RENDER
+========================================================= */
+
+function renderJobsInProgress() {
+
+  const totalElement =
+    document.getElementById(
+      "jobsTotal"
+    );
+
+
+  const jobsList =
+    document.getElementById(
+      "jobsList"
+    );
+
+
+  /*
+    Calculate total locally.
+
+    This means the display remains correct
+    even if totalJobsInProgress is not
+    supplied by the API.
+  */
+
+  const calculatedTotal =
+    jobsOrder.reduce(
+      (total, name) => {
+
+        const value =
+          Number(
+            jobsInProgress[
+              name
+            ]
+          ) || 0;
+
+
+        return total + value;
+
+      },
+      0
+    );
+
+
+  totalJobsInProgress =
+    calculatedTotal;
+
+
+  totalElement.textContent =
+    totalJobsInProgress.toLocaleString();
+
+
+  jobsList.innerHTML =
+    "";
+
+
+  /*
+    Find the highest department count.
+
+    The largest department gets a full
+    workload bar. All other bars are
+    relative to that department.
+
+    These bars are NOT percentages.
+  */
+
+  const maxJobs =
+    Math.max(
+
+      1,
+
+      ...jobsOrder.map(
+        name =>
+          Number(
+            jobsInProgress[
+              name
+            ]
+          ) || 0
+      )
+
+    );
+
+
+  jobsOrder.forEach(
+    name => {
+
+      const count =
+        Math.max(
+          0,
+          Number(
+            jobsInProgress[
+              name
+            ]
+          ) || 0
+        );
+
+
+      const barWidth =
+        (
+          count /
+          maxJobs
+        ) *
+        100;
+
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "job-item";
+
+
+      item.innerHTML = `
+
+        <div class="job-row">
+
+          <div class="job-name">
+            ${name}
+          </div>
+
+          <div class="job-count">
+            ${count.toLocaleString()}
+          </div>
+
+        </div>
+
+
+        <div class="job-bar">
+
+          <div
+            class="job-bar-fill"
+            style="width:${barWidth}%">
+          </div>
+
+        </div>
+
+      `;
+
+
+      jobsList.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
    DATA SIGNATURE
 ========================================================= */
 
 function createDataSignature(
-  dataset
+  salesDataset,
+  jobsDataset
 ) {
 
   return JSON.stringify(
-    dataset
+    {
+
+      sales:
+        salesDataset,
+
+      jobs:
+        jobsDataset
+
+    }
   );
 
 }
@@ -1409,7 +1937,8 @@ function createDataSignature(
 ========================================================= */
 
 function saveCurrentData(
-  dataset,
+  salesDataset,
+  jobsDataset,
   generatedAt
 ) {
 
@@ -1423,7 +1952,10 @@ function saveCurrentData(
         {
 
           data:
-            dataset,
+            salesDataset,
+
+          jobsInProgress:
+            jobsDataset,
 
           generatedAt:
             generatedAt || "",
@@ -1482,6 +2014,10 @@ function restoreCurrentData() {
       );
 
 
+    /*
+      Existing sales cache validation.
+    */
+
     if (
       !parsed ||
 
@@ -1501,9 +2037,38 @@ function restoreCurrentData() {
       parsed.data;
 
 
+    /*
+      Backward compatible.
+
+      If the browser has an older cache
+      created before Jobs in Progress
+      existed, the sales dashboard still
+      restores normally.
+    */
+
+    if (
+      parsed.jobsInProgress &&
+
+      typeof parsed.jobsInProgress ===
+        "object"
+    ) {
+
+      jobsInProgress =
+        {
+
+          ...jobsInProgress,
+
+          ...parsed.jobsInProgress
+
+        };
+
+    }
+
+
     currentSignature =
       createDataSignature(
-        data
+        data,
+        jobsInProgress
       );
 
 
@@ -1538,21 +2103,29 @@ function restoreCurrentData() {
 
 function applyData(
   newData,
+  newJobs,
   generatedAt
 ) {
-
-  const newSignature =
-    createDataSignature(
-      newData
-    );
-
 
   data =
     newData;
 
 
+  jobsInProgress =
+    {
+
+      ...jobsInProgress,
+
+      ...newJobs
+
+    };
+
+
   currentSignature =
-    newSignature;
+    createDataSignature(
+      data,
+      jobsInProgress
+    );
 
 
   lastApiGeneratedAt =
@@ -1560,12 +2133,16 @@ function applyData(
 
 
   saveCurrentData(
-    newData,
+    data,
+    jobsInProgress,
     generatedAt
   );
 
 
   renderDashboard();
+
+
+  renderJobsInProgress();
 
 }
 
@@ -1640,6 +2217,10 @@ async function fetchSheetData() {
   }
 
 
+  /* =======================================================
+     VALIDATE SALES METRICS
+  ======================================================= */
+
   if (
     !result.metrics ||
     typeof result.metrics !== "object"
@@ -1713,10 +2294,83 @@ async function fetchSheetData() {
   }
 
 
+  /* =======================================================
+     READ JOBS IN PROGRESS
+
+     Jobs data is deliberately optional.
+
+     If it is temporarily unavailable,
+     the existing Sales Dashboard will
+     continue working.
+  ======================================================= */
+
+  const newJobs =
+    {
+
+      ...jobsInProgress
+
+    };
+
+
+  if (
+    result.jobsInProgress &&
+
+    typeof result.jobsInProgress ===
+      "object"
+  ) {
+
+
+    jobsOrder.forEach(
+      name => {
+
+
+        if (
+          Object.prototype.hasOwnProperty.call(
+            result.jobsInProgress,
+            name
+          )
+        ) {
+
+
+          const value =
+            Number(
+              result.jobsInProgress[
+                name
+              ]
+            );
+
+
+          if (
+            Number.isFinite(
+              value
+            )
+          ) {
+
+            newJobs[name] =
+              Math.max(
+                0,
+                Math.round(
+                  value
+                )
+              );
+
+          }
+
+        }
+
+      }
+    );
+
+  }
+
+
   return {
 
     data:
       newData,
+
+    jobs:
+      newJobs,
 
     generatedAt:
       result.generatedAt || ""
@@ -1748,14 +2402,21 @@ async function loadSheet() {
       apiResult.data;
 
 
+    const newJobs =
+      apiResult.jobs;
+
+
     const newSignature =
       createDataSignature(
-        newData
+        newData,
+        newJobs
       );
 
 
     /*
-      Only redraw when values actually changed.
+      Only redraw when either:
+      - Sales values changed
+      - Jobs values changed
     */
 
     if (
@@ -1765,6 +2426,7 @@ async function loadSheet() {
 
       applyData(
         newData,
+        newJobs,
         apiResult.generatedAt
       );
 
@@ -1857,7 +2519,15 @@ setInterval(
 restoreCurrentData();
 
 
+/*
+  Render whatever data is currently
+  available immediately.
+*/
+
 renderDashboard();
+
+
+renderJobsInProgress();
 
 
 /*

@@ -46,7 +46,10 @@ body {
 
 /* =========================================================
    TOP MEDIA AREA
-   VIDEO + JOBS IN PROGRESS
+
+   LEFT  = Announcements + Holidays
+   CENTRE = Video
+   RIGHT = Jobs in Progress
 ========================================================= */
 
 #mediaArea {
@@ -56,12 +59,214 @@ body {
   display: grid;
 
   grid-template-columns:
+    18vw
     minmax(0, 1fr)
     18vw;
 
   background: #000;
 
   overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT INFORMATION PANEL
+========================================================= */
+
+#infoPanel {
+  width: 18vw;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      180deg,
+      #07121f 0%,
+      #0b1d30 100%
+    );
+
+  border-right:
+    1px solid
+    rgba(255,255,255,.10);
+
+  color: #ffffff;
+
+  display: grid;
+
+  grid-template-rows:
+    58% 42%;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT PANEL SECTIONS
+========================================================= */
+
+.info-section {
+  padding:
+    2vh
+    1.15vw;
+
+  overflow: hidden;
+}
+
+.announcement-section {
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.12);
+}
+
+.info-title {
+  font-size: 1vw;
+  font-weight: 800;
+
+  letter-spacing: .06em;
+
+  text-transform: uppercase;
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.info-subtitle {
+  margin-top: .35vh;
+
+  font-size: .58vw;
+
+  color: #8ea6bd;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   ANNOUNCEMENTS
+========================================================= */
+
+#announcementList {
+  margin-top: 1.6vh;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 1.1vh;
+}
+
+.announcement-item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: .55vw;
+
+  padding-bottom: .8vh;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.07);
+}
+
+.announcement-icon {
+  width: .45vw;
+  height: .45vw;
+
+  min-width: .45vw;
+
+  margin-top: .3vh;
+
+  border-radius: 50%;
+
+  background: #22b455;
+}
+
+.announcement-text {
+  font-size: .67vw;
+
+  line-height: 1.35;
+
+  font-weight: 600;
+
+  color: #e8f0f7;
+}
+
+
+/* =========================================================
+   PUBLIC HOLIDAYS
+========================================================= */
+
+#holidayList {
+  margin-top: 1.3vh;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: .9vh;
+}
+
+.holiday-item {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: .6vw;
+
+  padding-bottom: .7vh;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.07);
+}
+
+.holiday-name {
+  min-width: 0;
+
+  font-size: .64vw;
+
+  line-height: 1.2;
+
+  font-weight: 600;
+
+  color: #e8f0f7;
+}
+
+.holiday-date-wrap {
+  flex-shrink: 0;
+
+  text-align: right;
+}
+
+.holiday-date {
+  font-size: .65vw;
+
+  font-weight: 800;
+
+  color: #22b455;
+}
+
+.holiday-days {
+  margin-top: .15vh;
+
+  font-size: .48vw;
+
+  color: #8ea6bd;
+}
+
+
+/* =========================================================
+   EMPTY PANEL MESSAGE
+========================================================= */
+
+.empty-message {
+  margin-top: 2vh;
+
+  font-size: .62vw;
+
+  text-align: center;
+
+  color: #7f96ab;
 }
 
 
@@ -92,6 +297,7 @@ body {
   object-position: center center;
 
   background: #000;
+
   display: block;
 }
 
@@ -337,7 +543,7 @@ body {
 
 
 /* =========================================================
-   DASHBOARD
+   SALES DASHBOARD
 ========================================================= */
 
 #dashboard {
@@ -419,7 +625,7 @@ body {
 
 
 /* =========================================================
-   CARDS
+   DASHBOARD CARDS
 ========================================================= */
 
 .card {
@@ -500,9 +706,6 @@ body {
 
 /* =========================================================
    DOUBLE RING
-
-   OUTER = INVOICING PROGRESS
-   INNER = TIME ELAPSED
 ========================================================= */
 
 .double-ring {
@@ -592,7 +795,7 @@ body {
 
 
 /* =========================================================
-   CENTRE VALUE = TIME ELAPSED
+   CENTRE VALUE
 ========================================================= */
 
 .ring-center {
@@ -727,10 +930,54 @@ body {
 
   <!-- =====================================================
        TOP MEDIA AREA
-       VIDEO + JOBS IN PROGRESS
   ====================================================== -->
 
   <div id="mediaArea">
+
+
+    <!-- ===================================================
+         LEFT INFORMATION PANEL
+    ==================================================== -->
+
+    <aside id="infoPanel">
+
+
+      <!-- COMPANY ANNOUNCEMENTS -->
+
+      <section
+        class="info-section announcement-section">
+
+        <div class="info-title">
+          Company Announcements
+        </div>
+
+        <div class="info-subtitle">
+          Latest staff updates
+        </div>
+
+        <div id="announcementList"></div>
+
+      </section>
+
+
+      <!-- PUBLIC HOLIDAYS -->
+
+      <section class="info-section">
+
+        <div class="info-title">
+          Upcoming Public Holidays
+        </div>
+
+        <div class="info-subtitle">
+          Queensland
+        </div>
+
+        <div id="holidayList"></div>
+
+      </section>
+
+
+    </aside>
 
 
     <!-- ===================================================
@@ -775,6 +1022,7 @@ body {
           0
 
         </div>
+
 
         <div class="jobs-total-label">
           Total Active Jobs
@@ -885,29 +1133,16 @@ const API_URL =
   "https://script.google.com/macros/s/AKfycbyPPC5ODQA1QdqN8P7pc4lJvd4vR2fJTzFcSoMfKr8F_F3F1Iotc1hInjBKJXJ1xrIL/exec";
 
 
-/*
-  Dashboard requests current data
-  every 10 seconds.
-*/
-
 const REFRESH_MS =
   10000;
 
-
-/*
-  Last valid API data is kept locally.
-
-  If internet/API temporarily fails,
-  the workshop still sees the most
-  recently received valid figures.
-*/
 
 const STORAGE_KEY =
   "mechtestDashboardApiData";
 
 
 /* =========================================================
-   EXPECTED DASHBOARD METRICS
+   SALES DEFAULTS
 ========================================================= */
 
 const defaults = [
@@ -930,7 +1165,7 @@ let data =
 
 
 /* =========================================================
-   JOBS IN PROGRESS DEFAULTS
+   JOBS
 ========================================================= */
 
 const jobsOrder = [
@@ -968,7 +1203,23 @@ let totalJobsInProgress =
 
 
 /* =========================================================
-   LAST API STATE
+   ANNOUNCEMENTS
+========================================================= */
+
+let announcements =
+  [];
+
+
+/* =========================================================
+   PUBLIC HOLIDAYS
+========================================================= */
+
+let publicHolidays =
+  [];
+
+
+/* =========================================================
+   API STATE
 ========================================================= */
 
 let currentSignature =
@@ -1004,7 +1255,7 @@ const signageVideo =
 
 
 /* =========================================================
-   PLAY CURRENT AD
+   VIDEO PLAYBACK
 ========================================================= */
 
 function playCurrentAd() {
@@ -1013,14 +1264,6 @@ function playCurrentAd() {
     signagePlaylist[
       currentVideoIndex
     ];
-
-
-  console.log(
-    "Playing Ad " +
-    (currentVideoIndex + 1),
-
-    videoUrl
-  );
 
 
   signageVideo.pause();
@@ -1078,10 +1321,6 @@ function playCurrentAd() {
 }
 
 
-/* =========================================================
-   START VIDEO AFTER CLICK
-========================================================= */
-
 function startVideoAfterClick() {
 
   signageVideo.muted =
@@ -1098,7 +1337,7 @@ function startVideoAfterClick() {
       error => {
 
         console.error(
-          "Video playback failed after click:",
+          "Video playback failed:",
           error
         );
 
@@ -1107,10 +1346,6 @@ function startVideoAfterClick() {
 
 }
 
-
-/* =========================================================
-   NEXT VIDEO
-========================================================= */
 
 function playNextAd() {
 
@@ -1126,31 +1361,15 @@ function playNextAd() {
 }
 
 
-/* =========================================================
-   VIDEO EVENTS
-========================================================= */
-
 signageVideo.addEventListener(
   "ended",
-  function () {
-
-    playNextAd();
-
-  }
+  playNextAd
 );
 
 
 signageVideo.addEventListener(
   "error",
   function () {
-
-    console.error(
-      "Unable to load video:",
-      signagePlaylist[
-        currentVideoIndex
-      ]
-    );
-
 
     setTimeout(
       playNextAd,
@@ -1181,7 +1400,7 @@ function clampPercent(
 
 
 /* =========================================================
-   MONTHLY TIME ELAPSED
+   MONTH TIME
 ========================================================= */
 
 function getMonthElapsedPercent() {
@@ -1192,62 +1411,33 @@ function getMonthElapsedPercent() {
 
   const start =
     new Date(
-
       now.getFullYear(),
-
       now.getMonth(),
-
-      1,
-
-      0,
-      0,
-      0,
-      0
-
+      1
     );
 
 
   const end =
     new Date(
-
       now.getFullYear(),
-
       now.getMonth() + 1,
-
-      1,
-
-      0,
-      0,
-      0,
-      0
-
+      1
     );
 
 
   return clampPercent(
-
     (
       (now - start) /
       (end - start)
     ) *
-
     100
-
   );
 
 }
 
 
 /* =========================================================
-   FISCAL QUARTER TIME ELAPSED
-
-   MechTest Fiscal Year:
-   July 1 -> June 30
-
-   Q1 = Jul - Sep
-   Q2 = Oct - Dec
-   Q3 = Jan - Mar
-   Q4 = Apr - Jun
+   QUARTER TIME
 ========================================================= */
 
 function getQuarterElapsedPercent() {
@@ -1265,7 +1455,6 @@ function getQuarterElapsedPercent() {
 
 
   let quarterStartMonth;
-
   let quarterStartYear;
 
 
@@ -1274,106 +1463,68 @@ function getQuarterElapsedPercent() {
     month <= 8
   ) {
 
-    quarterStartMonth =
-      6;
-
-    quarterStartYear =
-      year;
+    quarterStartMonth = 6;
+    quarterStartYear = year;
 
   }
-
 
   else if (
     month >= 9 &&
     month <= 11
   ) {
 
-    quarterStartMonth =
-      9;
-
-    quarterStartYear =
-      year;
+    quarterStartMonth = 9;
+    quarterStartYear = year;
 
   }
-
 
   else if (
     month >= 0 &&
     month <= 2
   ) {
 
-    quarterStartMonth =
-      0;
-
-    quarterStartYear =
-      year;
+    quarterStartMonth = 0;
+    quarterStartYear = year;
 
   }
 
-
   else {
 
-    quarterStartMonth =
-      3;
-
-    quarterStartYear =
-      year;
+    quarterStartMonth = 3;
+    quarterStartYear = year;
 
   }
 
 
   const start =
     new Date(
-
       quarterStartYear,
-
       quarterStartMonth,
-
-      1,
-
-      0,
-      0,
-      0,
-      0
-
+      1
     );
 
 
   const end =
     new Date(
-
       quarterStartYear,
-
       quarterStartMonth + 3,
-
-      1,
-
-      0,
-      0,
-      0,
-      0
-
+      1
     );
 
 
   return clampPercent(
-
     (
       (now - start) /
       (end - start)
     ) *
-
     100
-
   );
 
 }
 
 
 /* =========================================================
-   FISCAL YEAR TIME ELAPSED
-
-   JULY 1 -> JUNE 30
+   FISCAL YEAR TIME
 ========================================================= */
 
 function getFiscalYearElapsedPercent() {
@@ -1390,103 +1541,55 @@ function getFiscalYearElapsedPercent() {
     now.getMonth();
 
 
-  let fiscalStartYear;
-
-
-  if (
+  const fiscalStartYear =
     month >= 6
-  ) {
-
-    fiscalStartYear =
-      year;
-
-  }
-
-  else {
-
-    fiscalStartYear =
-      year - 1;
-
-  }
+      ? year
+      : year - 1;
 
 
   const start =
     new Date(
-
       fiscalStartYear,
-
       6,
-
-      1,
-
-      0,
-      0,
-      0,
-      0
-
+      1
     );
 
 
   const end =
     new Date(
-
       fiscalStartYear + 1,
-
       6,
-
-      1,
-
-      0,
-      0,
-      0,
-      0
-
+      1
     );
 
 
   return clampPercent(
-
     (
       (now - start) /
       (end - start)
     ) *
-
     100
-
   );
 
 }
 
 
-/* =========================================================
-   GET TIME ELAPSED
-========================================================= */
-
 function getTimeElapsedPercent(
   label
 ) {
 
-  switch (
-    label
-  ) {
+  switch (label) {
 
     case "Monthly Target":
-
       return getMonthElapsedPercent();
 
-
     case "Quarterly Target":
-
       return getQuarterElapsedPercent();
 
-
     case "Annual Target":
-
       return getFiscalYearElapsedPercent();
 
-
     default:
-
       return null;
 
   }
@@ -1494,25 +1597,14 @@ function getTimeElapsedPercent(
 }
 
 
-/* =========================================================
-   DOUBLE RING CARDS
-========================================================= */
-
 function usesDoubleRing(
   label
 ) {
 
   return (
-
-    label ===
-      "Monthly Target" ||
-
-    label ===
-      "Quarterly Target" ||
-
-    label ===
-      "Annual Target"
-
+    label === "Monthly Target" ||
+    label === "Quarterly Target" ||
+    label === "Annual Target"
   );
 
 }
@@ -1537,15 +1629,11 @@ function getScheduleStatus(
   ) {
 
     return {
-
-      className:
-        "ahead",
-
+      className: "ahead",
       text:
         "Ahead by " +
         difference.toFixed(1) +
         "%"
-
     };
 
   }
@@ -1556,30 +1644,21 @@ function getScheduleStatus(
   ) {
 
     return {
-
-      className:
-        "behind",
-
+      className: "behind",
       text:
         "Behind by " +
         Math.abs(
           difference
         ).toFixed(1) +
         "%"
-
     };
 
   }
 
 
   return {
-
-    className:
-      "ontrack",
-
-    text:
-      "On track"
-
+    className: "ontrack",
+    text: "On track"
   };
 
 }
@@ -1604,7 +1683,6 @@ function renderDashboard() {
   data.forEach(
     ([label, pct]) => {
 
-
       pct =
         clampPercent(
           pct
@@ -1622,11 +1700,8 @@ function renderDashboard() {
 
 
       if (
-        usesDoubleRing(
-          label
-        )
+        usesDoubleRing(label)
       ) {
-
 
         const timePercent =
           clampPercent(
@@ -1649,62 +1724,47 @@ function renderDashboard() {
             ${label}
           </div>
 
-
           <div class="value">
             ${pct.toFixed(1)}%
           </div>
 
-
           <div class="double-ring">
-
 
             <div
               class="invoice-ring"
               style="--invoice:${pct}">
             </div>
 
-
             <div
               class="time-ring"
               style="--time:${timePercent}">
             </div>
 
-
             <div class="ring-center">
               ${timePercent.toFixed(0)}%
             </div>
 
-
           </div>
-
 
           <div class="ring-legend">
 
-
             <div class="legend-item">
-
               <span
                 class="legend-dot legend-time">
               </span>
 
               Time ${timePercent.toFixed(0)}%
-
             </div>
 
-
             <div class="legend-item">
-
               <span
                 class="legend-dot legend-progress">
               </span>
 
               Invoice ${pct.toFixed(0)}%
-
             </div>
 
-
           </div>
-
 
           <div
             class="schedule-status ${schedule.className}">
@@ -1712,11 +1772,9 @@ function renderDashboard() {
             ${schedule.text}
 
           </div>
-
         `;
 
       }
-
 
       else {
 
@@ -1726,22 +1784,18 @@ function renderDashboard() {
             ${label}
           </div>
 
-
           <div class="value">
             ${pct.toFixed(1)}%
           </div>
-
 
           <div
             class="ring"
             style="--p:${pct}">
           </div>
 
-
           <div class="sub">
             Progress
           </div>
-
         `;
 
       }
@@ -1758,7 +1812,7 @@ function renderDashboard() {
 
 
 /* =========================================================
-   JOBS IN PROGRESS RENDER
+   JOBS RENDER
 ========================================================= */
 
 function renderJobsInProgress() {
@@ -1775,35 +1829,17 @@ function renderJobsInProgress() {
     );
 
 
-  /*
-    Calculate total locally.
-
-    This means the display remains correct
-    even if totalJobsInProgress is not
-    supplied by the API.
-  */
-
-  const calculatedTotal =
+  totalJobsInProgress =
     jobsOrder.reduce(
-      (total, name) => {
-
-        const value =
+      (total, name) =>
+        total +
+        (
           Number(
-            jobsInProgress[
-              name
-            ]
-          ) || 0;
-
-
-        return total + value;
-
-      },
+            jobsInProgress[name]
+          ) || 0
+        ),
       0
     );
-
-
-  totalJobsInProgress =
-    calculatedTotal;
 
 
   totalElement.textContent =
@@ -1814,30 +1850,15 @@ function renderJobsInProgress() {
     "";
 
 
-  /*
-    Find the highest department count.
-
-    The largest department gets a full
-    workload bar. All other bars are
-    relative to that department.
-
-    These bars are NOT percentages.
-  */
-
   const maxJobs =
     Math.max(
-
       1,
-
       ...jobsOrder.map(
         name =>
           Number(
-            jobsInProgress[
-              name
-            ]
+            jobsInProgress[name]
           ) || 0
       )
-
     );
 
 
@@ -1848,9 +1869,7 @@ function renderJobsInProgress() {
         Math.max(
           0,
           Number(
-            jobsInProgress[
-              name
-            ]
+            jobsInProgress[name]
           ) || 0
         );
 
@@ -1887,7 +1906,6 @@ function renderJobsInProgress() {
 
         </div>
 
-
         <div class="job-bar">
 
           <div
@@ -1896,11 +1914,380 @@ function renderJobsInProgress() {
           </div>
 
         </div>
-
       `;
 
 
       jobsList.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   ANNOUNCEMENT RENDER
+========================================================= */
+
+function renderAnnouncements() {
+
+  const list =
+    document.getElementById(
+      "announcementList"
+    );
+
+
+  list.innerHTML =
+    "";
+
+
+  if (
+    !Array.isArray(announcements) ||
+    announcements.length === 0
+  ) {
+
+    list.innerHTML = `
+      <div class="empty-message">
+        No current announcements
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  announcements
+    .slice(0, 5)
+    .forEach(
+      text => {
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "announcement-item";
+
+
+        item.innerHTML = `
+
+          <span class="announcement-icon">
+          </span>
+
+          <div class="announcement-text">
+            ${text}
+          </div>
+        `;
+
+
+        list.appendChild(
+          item
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   HOLIDAY DATE PARSER
+
+   Expected format:
+   5 Oct 2026
+   25 Dec 2026
+   1 Jan 2027
+========================================================= */
+
+function parseHolidayDate(
+  dateText
+) {
+
+  if (
+    !dateText
+  ) {
+
+    return null;
+
+  }
+
+
+  const months = {
+
+    jan: 0,
+    feb: 1,
+    mar: 2,
+    apr: 3,
+    may: 4,
+    jun: 5,
+    jul: 6,
+    aug: 7,
+    sep: 8,
+    oct: 9,
+    nov: 10,
+    dec: 11
+
+  };
+
+
+  const parts =
+    String(dateText)
+      .trim()
+      .split(/\s+/);
+
+
+  if (
+    parts.length !== 3
+  ) {
+
+    return null;
+
+  }
+
+
+  const day =
+    parseInt(
+      parts[0],
+      10
+    );
+
+
+  const month =
+    months[
+      parts[1]
+        .substring(0, 3)
+        .toLowerCase()
+    ];
+
+
+  const year =
+    parseInt(
+      parts[2],
+      10
+    );
+
+
+  if (
+    Number.isNaN(day) ||
+    month === undefined ||
+    Number.isNaN(year)
+  ) {
+
+    return null;
+
+  }
+
+
+  return new Date(
+    year,
+    month,
+    day,
+    0,
+    0,
+    0,
+    0
+  );
+
+}
+
+
+/* =========================================================
+   HOLIDAY DISPLAY FORMAT
+
+   Australian style:
+   5 Oct 2026
+========================================================= */
+
+function formatHolidayDate(
+  date
+) {
+
+  return date.toLocaleDateString(
+    "en-AU",
+    {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+/* =========================================================
+   HOLIDAY RENDER
+========================================================= */
+
+function renderPublicHolidays() {
+
+  const list =
+    document.getElementById(
+      "holidayList"
+    );
+
+
+  list.innerHTML =
+    "";
+
+
+  const today =
+    new Date();
+
+
+  today.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
+
+  const upcoming =
+    publicHolidays
+
+      .map(
+        holiday => {
+
+          const parsedDate =
+            parseHolidayDate(
+              holiday.date
+            );
+
+
+          return {
+
+            name:
+              holiday.name,
+
+            date:
+              parsedDate
+
+          };
+
+        }
+      )
+
+      .filter(
+        holiday =>
+          holiday.name &&
+          holiday.date &&
+          holiday.date >= today
+      )
+
+      .sort(
+        (a, b) =>
+          a.date - b.date
+      )
+
+      .slice(
+        0,
+        4
+      );
+
+
+  if (
+    upcoming.length === 0
+  ) {
+
+    list.innerHTML = `
+      <div class="empty-message">
+        No upcoming holidays
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  upcoming.forEach(
+    holiday => {
+
+      const difference =
+        holiday.date -
+        today;
+
+
+      const daysAway =
+        Math.ceil(
+          difference /
+          (
+            1000 *
+            60 *
+            60 *
+            24
+          )
+        );
+
+
+      let daysText;
+
+
+      if (
+        daysAway === 0
+      ) {
+
+        daysText =
+          "Today";
+
+      }
+
+      else if (
+        daysAway === 1
+      ) {
+
+        daysText =
+          "Tomorrow";
+
+      }
+
+      else {
+
+        daysText =
+          daysAway +
+          " days away";
+
+      }
+
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "holiday-item";
+
+
+      item.innerHTML = `
+
+        <div class="holiday-name">
+          ${holiday.name}
+        </div>
+
+        <div class="holiday-date-wrap">
+
+          <div class="holiday-date">
+            ${formatHolidayDate(
+              holiday.date
+            )}
+          </div>
+
+          <div class="holiday-days">
+            ${daysText}
+          </div>
+
+        </div>
+      `;
+
+
+      list.appendChild(
         item
       );
 
@@ -1916,7 +2303,9 @@ function renderJobsInProgress() {
 
 function createDataSignature(
   salesDataset,
-  jobsDataset
+  jobsDataset,
+  announcementDataset,
+  holidayDataset
 ) {
 
   return JSON.stringify(
@@ -1926,7 +2315,13 @@ function createDataSignature(
         salesDataset,
 
       jobs:
-        jobsDataset
+        jobsDataset,
+
+      announcements:
+        announcementDataset,
+
+      holidays:
+        holidayDataset
 
     }
   );
@@ -1935,12 +2330,14 @@ function createDataSignature(
 
 
 /* =========================================================
-   SAVE LAST VALID API DATA LOCALLY
+   SAVE LOCAL DATA
 ========================================================= */
 
 function saveCurrentData(
   salesDataset,
   jobsDataset,
+  announcementDataset,
+  holidayDataset,
   generatedAt
 ) {
 
@@ -1959,6 +2356,12 @@ function saveCurrentData(
           jobsInProgress:
             jobsDataset,
 
+          announcements:
+            announcementDataset,
+
+          publicHolidays:
+            holidayDataset,
+
           generatedAt:
             generatedAt || "",
 
@@ -1971,7 +2374,6 @@ function saveCurrentData(
     );
 
   }
-
 
   catch (
     error
@@ -1988,7 +2390,7 @@ function saveCurrentData(
 
 
 /* =========================================================
-   RESTORE LAST VALID DATA
+   RESTORE LOCAL DATA
 ========================================================= */
 
 function restoreCurrentData() {
@@ -2016,17 +2418,11 @@ function restoreCurrentData() {
       );
 
 
-    /*
-      Existing sales cache validation.
-    */
-
     if (
       !parsed ||
-
       !Array.isArray(
         parsed.data
       ) ||
-
       parsed.data.length !== 5
     ) {
 
@@ -2039,30 +2435,43 @@ function restoreCurrentData() {
       parsed.data;
 
 
-    /*
-      Backward compatible.
-
-      If the browser has an older cache
-      created before Jobs in Progress
-      existed, the sales dashboard still
-      restores normally.
-    */
-
     if (
       parsed.jobsInProgress &&
-
       typeof parsed.jobsInProgress ===
         "object"
     ) {
 
-      jobsInProgress =
-        {
+      jobsInProgress = {
 
-          ...jobsInProgress,
+        ...jobsInProgress,
 
-          ...parsed.jobsInProgress
+        ...parsed.jobsInProgress
 
-        };
+      };
+
+    }
+
+
+    if (
+      Array.isArray(
+        parsed.announcements
+      )
+    ) {
+
+      announcements =
+        parsed.announcements;
+
+    }
+
+
+    if (
+      Array.isArray(
+        parsed.publicHolidays
+      )
+    ) {
+
+      publicHolidays =
+        parsed.publicHolidays;
 
     }
 
@@ -2070,20 +2479,16 @@ function restoreCurrentData() {
     currentSignature =
       createDataSignature(
         data,
-        jobsInProgress
+        jobsInProgress,
+        announcements,
+        publicHolidays
       );
 
 
     lastApiGeneratedAt =
       parsed.generatedAt || "";
 
-
-    console.log(
-      "Restored last valid API dashboard data."
-    );
-
   }
-
 
   catch (
     error
@@ -2106,6 +2511,8 @@ function restoreCurrentData() {
 function applyData(
   newData,
   newJobs,
+  newAnnouncements,
+  newHolidays,
   generatedAt
 ) {
 
@@ -2113,20 +2520,29 @@ function applyData(
     newData;
 
 
-  jobsInProgress =
-    {
+  jobsInProgress = {
 
-      ...jobsInProgress,
+    ...jobsInProgress,
 
-      ...newJobs
+    ...newJobs
 
-    };
+  };
+
+
+  announcements =
+    newAnnouncements;
+
+
+  publicHolidays =
+    newHolidays;
 
 
   currentSignature =
     createDataSignature(
       data,
-      jobsInProgress
+      jobsInProgress,
+      announcements,
+      publicHolidays
     );
 
 
@@ -2137,35 +2553,32 @@ function applyData(
   saveCurrentData(
     data,
     jobsInProgress,
+    announcements,
+    publicHolidays,
     generatedAt
   );
 
 
   renderDashboard();
 
-
   renderJobsInProgress();
+
+  renderAnnouncements();
+
+  renderPublicHolidays();
 
 }
 
 
 /* =========================================================
-   FETCH LIVE DATA FROM APPS SCRIPT
+   FETCH LIVE DATA
 ========================================================= */
 
 async function fetchSheetData() {
 
-  /*
-    Unique query value prevents the browser
-    from reusing the same request URL.
-  */
-
   const requestUrl =
-
     API_URL +
-
     "?_ts=" +
-
     Date.now();
 
 
@@ -2173,13 +2586,8 @@ async function fetchSheetData() {
     await fetch(
       requestUrl,
       {
-
-        method:
-          "GET",
-
-        cache:
-          "no-store"
-
+        method: "GET",
+        cache: "no-store"
       }
     );
 
@@ -2206,21 +2614,17 @@ async function fetchSheetData() {
   ) {
 
     throw new Error(
-
       result &&
       result.error
-
         ? result.error
-
-        : "Apps Script API returned an invalid response"
-
+        : "Invalid API response"
     );
 
   }
 
 
   /* =======================================================
-     VALIDATE SALES METRICS
+     SALES
   ======================================================= */
 
   if (
@@ -2229,7 +2633,7 @@ async function fetchSheetData() {
   ) {
 
     throw new Error(
-      "Apps Script API response has no metrics object"
+      "API response has no metrics object"
     );
 
   }
@@ -2242,7 +2646,6 @@ async function fetchSheetData() {
   for (
     const [name] of defaults
   ) {
-
 
     if (
       !Object.prototype.hasOwnProperty.call(
@@ -2261,9 +2664,7 @@ async function fetchSheetData() {
 
     const value =
       Number(
-        result.metrics[
-          name
-        ]
+        result.metrics[name]
       );
 
 
@@ -2283,13 +2684,10 @@ async function fetchSheetData() {
 
     newData.push(
       [
-
         name,
-
         clampPercent(
           value
         )
-
       ]
     );
 
@@ -2297,34 +2695,24 @@ async function fetchSheetData() {
 
 
   /* =======================================================
-     READ JOBS IN PROGRESS
-
-     Jobs data is deliberately optional.
-
-     If it is temporarily unavailable,
-     the existing Sales Dashboard will
-     continue working.
+     JOBS
   ======================================================= */
 
-  const newJobs =
-    {
+  const newJobs = {
 
-      ...jobsInProgress
+    ...jobsInProgress
 
-    };
+  };
 
 
   if (
     result.jobsInProgress &&
-
     typeof result.jobsInProgress ===
       "object"
   ) {
 
-
     jobsOrder.forEach(
       name => {
-
 
         if (
           Object.prototype.hasOwnProperty.call(
@@ -2332,7 +2720,6 @@ async function fetchSheetData() {
             name
           )
         ) {
-
 
           const value =
             Number(
@@ -2366,6 +2753,30 @@ async function fetchSheetData() {
   }
 
 
+  /* =======================================================
+     ANNOUNCEMENTS
+  ======================================================= */
+
+  const newAnnouncements =
+    Array.isArray(
+      result.announcements
+    )
+      ? result.announcements
+      : announcements;
+
+
+  /* =======================================================
+     PUBLIC HOLIDAYS
+  ======================================================= */
+
+  const newHolidays =
+    Array.isArray(
+      result.publicHolidays
+    )
+      ? result.publicHolidays
+      : publicHolidays;
+
+
   return {
 
     data:
@@ -2373,6 +2784,12 @@ async function fetchSheetData() {
 
     jobs:
       newJobs,
+
+    announcements:
+      newAnnouncements,
+
+    holidays:
+      newHolidays,
 
     generatedAt:
       result.generatedAt || ""
@@ -2383,7 +2800,7 @@ async function fetchSheetData() {
 
 
 /* =========================================================
-   LOAD GOOGLE SHEET THROUGH API
+   LOAD GOOGLE SHEET
 ========================================================= */
 
 async function loadSheet() {
@@ -2400,26 +2817,14 @@ async function loadSheet() {
       await fetchSheetData();
 
 
-    const newData =
-      apiResult.data;
-
-
-    const newJobs =
-      apiResult.jobs;
-
-
     const newSignature =
       createDataSignature(
-        newData,
-        newJobs
+        apiResult.data,
+        apiResult.jobs,
+        apiResult.announcements,
+        apiResult.holidays
       );
 
-
-    /*
-      Only redraw when either:
-      - Sales values changed
-      - Jobs values changed
-    */
 
     if (
       newSignature !==
@@ -2427,8 +2832,10 @@ async function loadSheet() {
     ) {
 
       applyData(
-        newData,
-        newJobs,
+        apiResult.data,
+        apiResult.jobs,
+        apiResult.announcements,
+        apiResult.holidays,
         apiResult.generatedAt
       );
 
@@ -2439,7 +2846,6 @@ async function loadSheet() {
           .toLocaleTimeString();
 
     }
-
 
     else {
 
@@ -2456,7 +2862,6 @@ async function loadSheet() {
 
   }
 
-
   catch (
     error
   ) {
@@ -2466,11 +2871,6 @@ async function loadSheet() {
       error
     );
 
-
-    /*
-      If the API or internet temporarily fails,
-      keep the last valid figures on screen.
-    */
 
     sync.innerHTML =
 
@@ -2498,7 +2898,9 @@ function updateClock() {
     .textContent =
 
       new Date()
-        .toLocaleString();
+        .toLocaleString(
+          "en-AU"
+        );
 
 }
 
@@ -2513,35 +2915,20 @@ setInterval(
    START SIGNAGE
 ========================================================= */
 
-/*
-  Restore last valid figures immediately
-  after browser/PC restart.
-*/
-
 restoreCurrentData();
 
 
-/*
-  Render whatever data is currently
-  available immediately.
-*/
-
 renderDashboard();
-
 
 renderJobsInProgress();
 
+renderAnnouncements();
 
-/*
-  Fetch live API immediately.
-*/
+renderPublicHolidays();
+
 
 loadSheet();
 
-
-/*
-  Then check Apps Script every 10 seconds.
-*/
 
 setInterval(
   loadSheet,

@@ -46,10 +46,6 @@ body {
 
 /* =========================================================
    TOP MEDIA AREA
-
-   LEFT   = Announcements + Holidays
-   CENTRE = Video
-   RIGHT  = Jobs in Progress
 ========================================================= */
 
 #mediaArea {
@@ -118,10 +114,10 @@ body {
 }
 
 .info-title {
-  font-size: 1.25vw;
+  font-size: clamp(18px, 1.2vw, 24px);
   font-weight: 800;
 
-  letter-spacing: .06em;
+  letter-spacing: .05em;
 
   text-transform: uppercase;
 
@@ -133,7 +129,7 @@ body {
 .info-subtitle {
   margin-top: .3vh;
 
-  font-size: .58vw;
+  font-size: clamp(11px, .68vw, 15px);
 
   color: #8ea6bd;
 
@@ -146,12 +142,12 @@ body {
 ========================================================= */
 
 #announcementList {
-  margin-top: 1.35vh;
+  margin-top: 1.2vh;
 
   display: flex;
   flex-direction: column;
 
-  gap: .9vh;
+  gap: .65vh;
 }
 
 .announcement-item {
@@ -159,9 +155,9 @@ body {
 
   align-items: flex-start;
 
-  gap: .5vw;
+  gap: .55vw;
 
-  padding-bottom: .65vh;
+  padding-bottom: .55vh;
 
   border-bottom:
     1px solid
@@ -169,12 +165,12 @@ body {
 }
 
 .announcement-icon {
-  width: .42vw;
-  height: .42vw;
+  width: .52vw;
+  height: .52vw;
 
-  min-width: .42vw;
+  min-width: .52vw;
 
-  margin-top: .3vh;
+  margin-top: .42vh;
 
   border-radius: 50%;
 
@@ -182,9 +178,9 @@ body {
 }
 
 .announcement-text {
-  font-size: .65vw;
+  font-size: clamp(15px, .95vw, 19px);
 
-  line-height: 1.3;
+  line-height: 1.28;
 
   font-weight: 600;
 
@@ -197,12 +193,12 @@ body {
 ========================================================= */
 
 #holidayList {
-  margin-top: 1.05vh;
+  margin-top: .9vh;
 
   display: flex;
   flex-direction: column;
 
-  gap: .7vh;
+  gap: .55vh;
 }
 
 .holiday-item {
@@ -213,7 +209,7 @@ body {
 
   gap: .55vw;
 
-  padding-bottom: .55vh;
+  padding-bottom: .45vh;
 
   border-bottom:
     1px solid
@@ -223,9 +219,9 @@ body {
 .holiday-name {
   min-width: 0;
 
-  font-size: .62vw;
+  font-size: clamp(14px, .9vw, 18px);
 
-  line-height: 1.15;
+  line-height: 1.2;
 
   font-weight: 600;
 
@@ -239,7 +235,7 @@ body {
 }
 
 .holiday-date {
-  font-size: .63vw;
+  font-size: clamp(14px, .9vw, 18px);
 
   font-weight: 800;
 
@@ -249,7 +245,7 @@ body {
 .holiday-days {
   margin-top: .1vh;
 
-  font-size: .46vw;
+  font-size: clamp(11px, .65vw, 14px);
 
   color: #8ea6bd;
 }
@@ -262,7 +258,7 @@ body {
 .empty-message {
   margin-top: 1.5vh;
 
-  font-size: .6vw;
+  font-size: clamp(12px, .7vw, 15px);
 
   text-align: center;
 
@@ -340,10 +336,10 @@ body {
 ========================================================= */
 
 .jobs-title {
-  font-size: 1.05vw;
+  font-size: clamp(18px, 1.2vw, 24px);
   font-weight: 800;
 
-  letter-spacing: .07em;
+  letter-spacing: .06em;
 
   color: #ffffff;
 
@@ -355,7 +351,7 @@ body {
 .jobs-subtitle {
   margin-top: .3vh;
 
-  font-size: .6vw;
+  font-size: clamp(11px, .7vw, 15px);
 
   color: #8ea6bd;
 
@@ -376,7 +372,7 @@ body {
 }
 
 .jobs-total {
-  font-size: 2.9vw;
+  font-size: clamp(44px, 3.4vw, 64px);
   line-height: 1;
 
   font-weight: 900;
@@ -387,7 +383,7 @@ body {
 .jobs-total-label {
   margin-top: .35vh;
 
-  font-size: .64vw;
+  font-size: clamp(12px, .75vw, 16px);
 
   font-weight: 700;
 
@@ -445,14 +441,16 @@ body {
   justify-content: space-between;
 
   gap: .6vw;
+
   padding-right: .45vw;
 }
 
 .job-name {
   min-width: 0;
 
-  font-size: .66vw;
-  line-height: 1.15;
+  font-size: clamp(14px, .88vw, 18px);
+
+  line-height: 1.2;
 
   font-weight: 600;
 
@@ -462,7 +460,8 @@ body {
 .job-count {
   flex-shrink: 0;
 
-  font-size: .9vw;
+  font-size: clamp(16px, 1vw, 20px);
+
   line-height: 1;
 
   font-weight: 800;
@@ -528,14 +527,14 @@ body {
 
   gap: .35vw;
 
-  font-size: .52vw;
+  font-size: clamp(10px, .6vw, 13px);
 
   color: #7f96ab;
 }
 
 .jobs-live-dot {
-  width: .38vw;
-  height: .38vw;
+  width: .42vw;
+  height: .42vw;
 
   border-radius: 50%;
 
@@ -929,21 +928,11 @@ body {
 <div class="stage">
 
 
-  <!-- =====================================================
-       TOP MEDIA AREA
-  ====================================================== -->
-
   <div id="mediaArea">
 
 
-    <!-- ===================================================
-         LEFT INFORMATION PANEL
-    ==================================================== -->
-
     <aside id="infoPanel">
 
-
-      <!-- COMPANY ANNOUNCEMENTS -->
 
       <section
         class="info-section announcement-section">
@@ -960,8 +949,6 @@ body {
 
       </section>
 
-
-      <!-- PUBLIC HOLIDAYS -->
 
       <section class="info-section">
 
@@ -981,10 +968,6 @@ body {
     </aside>
 
 
-    <!-- ===================================================
-         VIDEO ADS
-    ==================================================== -->
-
     <div id="videoArea">
 
       <video
@@ -996,10 +979,6 @@ body {
 
     </div>
 
-
-    <!-- ===================================================
-         JOBS IN PROGRESS
-    ==================================================== -->
 
     <aside id="jobsPanel">
 
@@ -1054,10 +1033,6 @@ body {
 
   </div>
 
-
-  <!-- =====================================================
-       SALES DASHBOARD
-  ====================================================== -->
 
   <section id="dashboard">
 
@@ -1126,10 +1101,6 @@ body {
 <script>
 
 
-/* =========================================================
-   GOOGLE APPS SCRIPT API
-========================================================= */
-
 const API_URL =
   "https://script.google.com/macros/s/AKfycbyPPC5ODQA1QdqN8P7pc4lJvd4vR2fJTzFcSoMfKr8F_F3F1Iotc1hInjBKJXJ1xrIL/exec";
 
@@ -1141,10 +1112,6 @@ const REFRESH_MS =
 const STORAGE_KEY =
   "mechtestDashboardApiData";
 
-
-/* =========================================================
-   SALES DEFAULTS
-========================================================= */
 
 const defaults = [
 
@@ -1164,10 +1131,6 @@ const defaults = [
 let data =
   defaults.slice();
 
-
-/* =========================================================
-   JOBS
-========================================================= */
 
 const jobsOrder = [
 
@@ -1203,25 +1166,13 @@ let totalJobsInProgress =
   0;
 
 
-/* =========================================================
-   ANNOUNCEMENTS
-========================================================= */
-
 let announcements =
   [];
 
 
-/* =========================================================
-   PUBLIC HOLIDAYS
-========================================================= */
-
 let publicHolidays =
   [];
 
-
-/* =========================================================
-   API STATE
-========================================================= */
 
 let currentSignature =
   "";
@@ -1229,10 +1180,6 @@ let currentSignature =
 let lastApiGeneratedAt =
   "";
 
-
-/* =========================================================
-   VIDEO PLAYLIST
-========================================================= */
 
 const signagePlaylist = [
 
@@ -1255,10 +1202,6 @@ const signageVideo =
   );
 
 
-/* =========================================================
-   VIDEO PLAYBACK
-========================================================= */
-
 function playCurrentAd() {
 
   const videoUrl =
@@ -1269,22 +1212,17 @@ function playCurrentAd() {
 
   signageVideo.pause();
 
-
   signageVideo.src =
     videoUrl;
-
 
   signageVideo.currentTime =
     0;
 
-
   signageVideo.muted =
     false;
 
-
   signageVideo.volume =
     1;
-
 
   signageVideo.load();
 
@@ -1326,7 +1264,6 @@ function startVideoAfterClick() {
 
   signageVideo.muted =
     false;
-
 
   signageVideo.volume =
     1;
@@ -1381,10 +1318,6 @@ signageVideo.addEventListener(
 );
 
 
-/* =========================================================
-   PERCENTAGE HELPER
-========================================================= */
-
 function clampPercent(
   value
 ) {
@@ -1399,10 +1332,6 @@ function clampPercent(
 
 }
 
-
-/* =========================================================
-   MONTH TIME
-========================================================= */
 
 function getMonthElapsedPercent() {
 
@@ -1436,10 +1365,6 @@ function getMonthElapsedPercent() {
 
 }
 
-
-/* =========================================================
-   QUARTER TIME
-========================================================= */
 
 function getQuarterElapsedPercent() {
 
@@ -1524,10 +1449,6 @@ function getQuarterElapsedPercent() {
 }
 
 
-/* =========================================================
-   FISCAL YEAR TIME
-========================================================= */
-
 function getFiscalYearElapsedPercent() {
 
   const now =
@@ -1611,10 +1532,6 @@ function usesDoubleRing(
 }
 
 
-/* =========================================================
-   AHEAD / BEHIND
-========================================================= */
-
 function getScheduleStatus(
   progressPercent,
   timePercent
@@ -1664,10 +1581,6 @@ function getScheduleStatus(
 
 }
 
-
-/* =========================================================
-   SALES DASHBOARD RENDER
-========================================================= */
 
 function renderDashboard() {
 
@@ -1812,10 +1725,6 @@ function renderDashboard() {
 }
 
 
-/* =========================================================
-   JOBS RENDER
-========================================================= */
-
 function renderJobsInProgress() {
 
   const totalElement =
@@ -1928,10 +1837,6 @@ function renderJobsInProgress() {
 }
 
 
-/* =========================================================
-   ANNOUNCEMENT RENDER
-========================================================= */
-
 function renderAnnouncements() {
 
   const list =
@@ -1995,10 +1900,6 @@ function renderAnnouncements() {
 
 }
 
-
-/* =========================================================
-   HOLIDAY DATE PARSER
-========================================================= */
 
 function parseHolidayDate(
   dateText
@@ -2092,10 +1993,6 @@ function parseHolidayDate(
 }
 
 
-/* =========================================================
-   HOLIDAY DISPLAY FORMAT
-========================================================= */
-
 function formatHolidayDate(
   date
 ) {
@@ -2111,10 +2008,6 @@ function formatHolidayDate(
 
 }
 
-
-/* =========================================================
-   HOLIDAY RENDER
-========================================================= */
 
 function renderPublicHolidays() {
 
@@ -2290,10 +2183,6 @@ function renderPublicHolidays() {
 }
 
 
-/* =========================================================
-   DATA SIGNATURE
-========================================================= */
-
 function createDataSignature(
   salesDataset,
   jobsDataset,
@@ -2321,10 +2210,6 @@ function createDataSignature(
 
 }
 
-
-/* =========================================================
-   SAVE LOCAL DATA
-========================================================= */
 
 function saveCurrentData(
   salesDataset,
@@ -2381,10 +2266,6 @@ function saveCurrentData(
 
 }
 
-
-/* =========================================================
-   RESTORE LOCAL DATA
-========================================================= */
 
 function restoreCurrentData() {
 
@@ -2497,10 +2378,6 @@ function restoreCurrentData() {
 }
 
 
-/* =========================================================
-   APPLY API DATA
-========================================================= */
-
 function applyData(
   newData,
   newJobs,
@@ -2563,10 +2440,6 @@ function applyData(
 }
 
 
-/* =========================================================
-   FETCH LIVE DATA
-========================================================= */
-
 async function fetchSheetData() {
 
   const requestUrl =
@@ -2615,10 +2488,6 @@ async function fetchSheetData() {
 
   }
 
-
-  /* =======================================================
-     SALES
-  ======================================================= */
 
   if (
     !result.metrics ||
@@ -2687,10 +2556,6 @@ async function fetchSheetData() {
   }
 
 
-  /* =======================================================
-     JOBS
-  ======================================================= */
-
   const newJobs = {
 
     ...jobsInProgress
@@ -2746,10 +2611,6 @@ async function fetchSheetData() {
   }
 
 
-  /* =======================================================
-     ANNOUNCEMENTS
-  ======================================================= */
-
   const newAnnouncements =
     Array.isArray(
       result.announcements
@@ -2757,10 +2618,6 @@ async function fetchSheetData() {
       ? result.announcements
       : announcements;
 
-
-  /* =======================================================
-     PUBLIC HOLIDAYS
-  ======================================================= */
 
   const newHolidays =
     Array.isArray(
@@ -2791,10 +2648,6 @@ async function fetchSheetData() {
 
 }
 
-
-/* =========================================================
-   LOAD GOOGLE SHEET
-========================================================= */
 
 async function loadSheet() {
 
@@ -2878,10 +2731,6 @@ async function loadSheet() {
 }
 
 
-/* =========================================================
-   CLOCK
-========================================================= */
-
 function updateClock() {
 
   document
@@ -2903,10 +2752,6 @@ setInterval(
   1000
 );
 
-
-/* =========================================================
-   START SIGNAGE
-========================================================= */
 
 restoreCurrentData();
 

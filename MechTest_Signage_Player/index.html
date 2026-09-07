@@ -917,6 +917,312 @@ body {
   color: #b42318;
 }
 
+
+/* =========================================================
+   RESPONSIVE / DYNAMIC SIZING OVERRIDES
+   SIZE-ONLY CHANGES — NO JAVASCRIPT / FUNCTION CHANGES
+========================================================= */
+
+/*
+  The layout continues to use the full browser viewport.
+  These overrides make text, spacing, rings, and side panels
+  scale more consistently across different TV resolutions.
+*/
+
+:root {
+  --side-panel-width: clamp(220px, 20vw, 420px);
+  --ui-gap: clamp(4px, .5vw, 12px);
+}
+
+/* Keep the existing 70 / 30 vertical split, but make
+   the side panels resolution-aware instead of fixed 20vw. */
+#mediaArea {
+  grid-template-columns:
+    var(--side-panel-width)
+    minmax(0, 1fr)
+    var(--side-panel-width);
+}
+
+#infoPanel,
+#jobsPanel {
+  width: 100%;
+}
+
+/* Left panel */
+.info-section {
+  padding:
+    clamp(10px, 1.8vh, 24px)
+    clamp(10px, 1.15vw, 22px);
+}
+
+.info-title {
+  font-size: clamp(16px, 1.15vw, 26px);
+}
+
+.info-subtitle {
+  font-size: clamp(10px, .68vw, 16px);
+}
+
+#announcementList {
+  margin-top: clamp(6px, 1.2vh, 14px);
+  gap: clamp(3px, .65vh, 9px);
+}
+
+.announcement-item {
+  gap: clamp(6px, .55vw, 12px);
+  padding-bottom: clamp(3px, .55vh, 8px);
+}
+
+.announcement-icon {
+  width: clamp(6px, .52vw, 10px);
+  height: clamp(6px, .52vw, 10px);
+  min-width: clamp(6px, .52vw, 10px);
+}
+
+.announcement-text {
+  font-size: clamp(14px, 1.15vw, 25px);
+}
+
+#holidayList {
+  margin-top: clamp(5px, .9vh, 12px);
+  gap: clamp(3px, .55vh, 8px);
+}
+
+.holiday-item {
+  gap: clamp(6px, .55vw, 12px);
+  padding-bottom: clamp(3px, .45vh, 7px);
+}
+
+.holiday-name,
+.holiday-date {
+  font-size: clamp(12px, .9vw, 19px);
+}
+
+.holiday-days {
+  font-size: clamp(10px, .65vw, 15px);
+}
+
+.empty-message {
+  font-size: clamp(11px, .7vw, 16px);
+}
+
+/* Jobs panel */
+#jobsPanel {
+  padding:
+    clamp(10px, 2vh, 26px)
+    clamp(10px, 1.1vw, 22px)
+    clamp(8px, 1.4vh, 20px);
+}
+
+.jobs-title {
+  font-size: clamp(16px, 1.15vw, 26px);
+}
+
+.jobs-subtitle {
+  font-size: clamp(10px, .7vw, 16px);
+}
+
+.jobs-total-wrap {
+  margin:
+    clamp(6px, 1.1vh, 14px)
+    0;
+}
+
+.jobs-total {
+  font-size: clamp(34px, 3.4vw, 68px);
+}
+
+.jobs-total-label {
+  font-size: clamp(10px, .75vw, 17px);
+}
+
+#jobsList {
+  gap: clamp(4px, .95vh, 12px);
+}
+
+.job-row {
+  gap: clamp(6px, .6vw, 12px);
+  padding-right: clamp(4px, .45vw, 10px);
+}
+
+.job-name {
+  font-size: clamp(12px, .88vw, 19px);
+}
+
+.job-count {
+  font-size: clamp(14px, 1vw, 21px);
+}
+
+.job-bar {
+  height: clamp(2px, .32vh, 5px);
+  margin-top: clamp(2px, .4vh, 5px);
+}
+
+.jobs-live {
+  margin-top: clamp(4px, .8vh, 10px);
+  padding-top: clamp(4px, .8vh, 10px);
+  gap: clamp(4px, .35vw, 8px);
+  font-size: clamp(9px, .6vw, 14px);
+}
+
+.jobs-live-dot {
+  width: clamp(5px, .42vw, 9px);
+  height: clamp(5px, .42vw, 9px);
+}
+
+/* Sales dashboard */
+#dashboard {
+  padding:
+    clamp(5px, .75vh, 12px)
+    clamp(12px, 2vw, 38px);
+}
+
+.top {
+  margin-bottom: clamp(3px, .45vh, 8px);
+}
+
+.title {
+  font-size: clamp(16px, 1.45vw, 30px);
+}
+
+.sub {
+  font-size: clamp(9px, .7vw, 15px);
+}
+
+.logo-wrap img {
+  height: clamp(24px, 3.7vh, 52px);
+  max-width: clamp(110px, 14vw, 280px);
+}
+
+.grid {
+  gap: clamp(6px, .8vw, 16px);
+}
+
+.card {
+  border-radius: clamp(6px, .7vw, 14px);
+  padding:
+    clamp(4px, .38vw, 8px)
+    clamp(5px, .45vw, 10px);
+}
+
+.label {
+  font-size: clamp(10px, .72vw, 16px);
+}
+
+.value {
+  font-size: clamp(16px, 1.3vw, 28px);
+}
+
+/* Rings */
+.ring {
+  width: clamp(42px, 3.3vw, 72px);
+  height: clamp(42px, 3.3vw, 72px);
+}
+
+.ring:after {
+  inset: clamp(5px, .45vw, 10px);
+}
+
+.double-ring {
+  width: clamp(50px, 4.25vw, 88px);
+  height: clamp(50px, 4.25vw, 88px);
+}
+
+.invoice-ring:after {
+  inset: clamp(4px, .36vw, 8px);
+}
+
+.time-ring {
+  inset: clamp(8px, .67vw, 14px);
+}
+
+.time-ring:after {
+  inset: clamp(4px, .34vw, 8px);
+}
+
+.ring-center {
+  font-size: clamp(9px, .64vw, 14px);
+}
+
+.ring-legend {
+  gap: clamp(4px, .45vw, 9px);
+  font-size: clamp(8px, .52vw, 12px);
+}
+
+.legend-item {
+  gap: clamp(2px, .16vw, 4px);
+}
+
+.legend-dot {
+  width: clamp(5px, .36vw, 8px);
+  height: clamp(5px, .36vw, 8px);
+}
+
+.schedule-status {
+  font-size: clamp(9px, .6vw, 13px);
+}
+
+.foot {
+  font-size: clamp(8px, .6vw, 13px);
+}
+
+.status {
+  gap: clamp(4px, .35vw, 8px);
+}
+
+.dot {
+  width: clamp(5px, .4vw, 9px);
+  height: clamp(5px, .4vw, 9px);
+}
+
+/* Smaller / lower-resolution TVs */
+@media (max-width: 1400px) {
+  :root {
+    --side-panel-width: clamp(210px, 20vw, 280px);
+  }
+
+  .announcement-text {
+    font-size: clamp(14px, 1.08vw, 19px);
+  }
+
+  .job-name {
+    font-size: clamp(12px, .84vw, 16px);
+  }
+
+  .job-count {
+    font-size: clamp(14px, .95vw, 18px);
+  }
+}
+
+/* Very narrow browser viewport */
+@media (max-width: 1100px) {
+  :root {
+    --side-panel-width: clamp(190px, 21vw, 235px);
+  }
+
+  .info-title,
+  .jobs-title {
+    font-size: clamp(14px, 1.05vw, 18px);
+  }
+
+  .announcement-text {
+    font-size: clamp(12px, 1vw, 16px);
+  }
+
+  .holiday-name,
+  .holiday-date,
+  .job-name {
+    font-size: clamp(11px, .85vw, 14px);
+  }
+}
+
+/* Large Full-HD / 4K displays */
+@media (min-width: 1920px) {
+  :root {
+    --side-panel-width: clamp(360px, 20vw, 460px);
+  }
+}
+
 </style>
 
 </head>

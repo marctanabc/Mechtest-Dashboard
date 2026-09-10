@@ -512,6 +512,87 @@ body {
 
 
 /* =========================================================
+   UPCOMING LEAVES
+========================================================= */
+
+.leave-section {
+  margin-top: 1.2vh;
+  padding-top: 1vh;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.12);
+}
+
+.leave-title {
+  margin-bottom: .8vh;
+
+  font-size: clamp(13px, .9vw, 18px);
+
+  font-weight: 800;
+
+  letter-spacing: .05em;
+
+  text-transform: uppercase;
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+#leaveList {
+  display: flex;
+  flex-direction: column;
+
+  gap: .55vh;
+}
+
+.leave-item {
+  padding-bottom: .45vh;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.07);
+}
+
+.leave-name {
+  font-size: clamp(12px, .82vw, 17px);
+
+  line-height: 1.15;
+
+  font-weight: 700;
+
+  color: #e8f0f7;
+}
+
+.leave-dates {
+  margin-top: .15vh;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: .4vw;
+
+  font-size: clamp(9px, .6vw, 13px);
+
+  color: #8ea6bd;
+}
+
+.leave-start {
+  white-space: nowrap;
+}
+
+.leave-rtw {
+  white-space: nowrap;
+
+  font-weight: 700;
+
+  color: #22b455;
+}
+
+
+/* =========================================================
    JOBS LIVE STATUS
 ========================================================= */
 
@@ -924,22 +1005,13 @@ body {
 
 /* =========================================================
    RESPONSIVE / DYNAMIC SIZING OVERRIDES
-   SIZE-ONLY CHANGES — NO JAVASCRIPT / FUNCTION CHANGES
 ========================================================= */
-
-/*
-  The layout continues to use the full browser viewport.
-  These overrides make text, spacing, rings, and side panels
-  scale more consistently across different TV resolutions.
-*/
 
 :root {
   --side-panel-width: clamp(220px, 20vw, 420px);
   --ui-gap: clamp(4px, .5vw, 12px);
 }
 
-/* Keep the existing 70 / 30 vertical split, but make
-   the side panels resolution-aware instead of fixed 20vw. */
 #mediaArea {
   grid-template-columns:
     var(--side-panel-width)
@@ -952,7 +1024,9 @@ body {
   width: 100%;
 }
 
+
 /* Left panel */
+
 .info-section {
   padding:
     clamp(10px, 1.8vh, 24px)
@@ -1010,7 +1084,9 @@ body {
   font-size: clamp(11px, .7vw, 16px);
 }
 
+
 /* Jobs panel */
+
 #jobsPanel {
   padding:
     clamp(10px, 2vh, 26px)
@@ -1062,6 +1138,39 @@ body {
   margin-top: clamp(2px, .4vh, 5px);
 }
 
+
+/* Leaves responsive */
+
+.leave-section {
+  margin-top: clamp(5px, 1.2vh, 14px);
+  padding-top: clamp(5px, 1vh, 12px);
+}
+
+.leave-title {
+  margin-bottom: clamp(4px, .8vh, 10px);
+
+  font-size: clamp(12px, .9vw, 18px);
+}
+
+#leaveList {
+  gap: clamp(2px, .55vh, 7px);
+}
+
+.leave-item {
+  padding-bottom: clamp(2px, .45vh, 6px);
+}
+
+.leave-name {
+  font-size: clamp(11px, .82vw, 17px);
+}
+
+.leave-dates {
+  font-size: clamp(9px, .6vw, 13px);
+}
+
+
+/* Jobs live */
+
 .jobs-live {
   margin-top: clamp(4px, .8vh, 10px);
   padding-top: clamp(4px, .8vh, 10px);
@@ -1074,7 +1183,9 @@ body {
   height: clamp(5px, .42vw, 9px);
 }
 
+
 /* Sales dashboard */
+
 #dashboard {
   padding:
     clamp(5px, .75vh, 12px)
@@ -1104,6 +1215,7 @@ body {
 
 .card {
   border-radius: clamp(6px, .7vw, 14px);
+
   padding:
     clamp(4px, .38vw, 8px)
     clamp(5px, .45vw, 10px);
@@ -1117,7 +1229,9 @@ body {
   font-size: clamp(16px, 1.3vw, 28px);
 }
 
+
 /* Rings */
+
 .ring {
   width: clamp(42px, 3.3vw, 72px);
   height: clamp(42px, 3.3vw, 72px);
@@ -1179,8 +1293,11 @@ body {
   height: clamp(5px, .4vw, 9px);
 }
 
+
 /* Smaller / lower-resolution TVs */
+
 @media (max-width: 1400px) {
+
   :root {
     --side-panel-width: clamp(210px, 20vw, 280px);
   }
@@ -1196,10 +1313,23 @@ body {
   .job-count {
     font-size: clamp(14px, .95vw, 18px);
   }
+
+  .holiday-date-wrap {
+    min-width: 100px;
+  }
+
+  .holiday-date {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
 }
 
+
 /* Very narrow browser viewport */
+
 @media (max-width: 1100px) {
+
   :root {
     --side-panel-width: clamp(190px, 21vw, 235px);
   }
@@ -1218,26 +1348,28 @@ body {
   .job-name {
     font-size: clamp(11px, .85vw, 14px);
   }
+
+  .leave-name {
+    font-size: clamp(10px, .8vw, 13px);
+  }
+
+  .leave-dates {
+    font-size: clamp(8px, .58vw, 11px);
+  }
+
 }
 
+
 /* Large Full-HD / 4K displays */
+
 @media (min-width: 1920px) {
+
   :root {
     --side-panel-width: clamp(360px, 20vw, 460px);
   }
-}
-@media (max-width: 1400px) {
-
-  .holiday-date-wrap {
-    min-width: 100px;
-  }
-
-  .holiday-date {
-    font-size: 11px;
-    white-space: nowrap;
-  }
 
 }
+
 </style>
 
 </head>
@@ -1251,6 +1383,10 @@ body {
 
   <div id="mediaArea">
 
+
+    <!-- =====================================================
+         LEFT PANEL
+    ====================================================== -->
 
     <aside id="infoPanel">
 
@@ -1289,6 +1425,10 @@ body {
     </aside>
 
 
+    <!-- =====================================================
+         VIDEO
+    ====================================================== -->
+
     <div id="videoArea">
 
       <video
@@ -1300,6 +1440,10 @@ body {
 
     </div>
 
+
+    <!-- =====================================================
+         RIGHT PANEL
+    ====================================================== -->
 
     <aside id="jobsPanel">
 
@@ -1338,6 +1482,21 @@ body {
       <div id="jobsList"></div>
 
 
+      <!-- UPCOMING LEAVES -->
+
+      <div class="leave-section">
+
+        <div class="leave-title">
+          Upcoming Leaves
+        </div>
+
+        <div id="leaveList"></div>
+
+      </div>
+
+
+      <!-- LIVE JOB STATUS -->
+
       <div class="jobs-live">
 
         <span class="jobs-live-dot"></span>
@@ -1354,6 +1513,10 @@ body {
 
   </div>
 
+
+  <!-- =======================================================
+       SALES DASHBOARD
+  ======================================================== -->
 
   <section id="dashboard">
 
@@ -1422,6 +1585,10 @@ body {
 <script>
 
 
+/* =========================================================
+   API
+========================================================= */
+
 const API_URL =
   "https://script.google.com/macros/s/AKfycbzmbCW_z8mt6h34zFrg-MdUF-CDvxlTSd-BzTb8EPdxqa-a8PZW2Z_VpXr1fdWXBwOa/exec";
 
@@ -1433,6 +1600,10 @@ const REFRESH_MS =
 const STORAGE_KEY =
   "mechtestDashboardApiData";
 
+
+/* =========================================================
+   SALES DATA
+========================================================= */
 
 const defaults = [
 
@@ -1452,6 +1623,10 @@ const defaults = [
 let data =
   defaults.slice();
 
+
+/* =========================================================
+   JOBS
+========================================================= */
 
 const jobsOrder = [
 
@@ -1484,9 +1659,9 @@ let jobsInProgress = {
 
   "NDTIC": 0,
 
-  "Poly": 0,
+  "POLY": 0,
 
-  "Welding": 0
+  "WELDING": 0
 
 };
 
@@ -1494,6 +1669,10 @@ let jobsInProgress = {
 let totalJobsInProgress =
   0;
 
+
+/* =========================================================
+   INFORMATION DATA
+========================================================= */
 
 let announcements =
   [];
@@ -1503,12 +1682,25 @@ let publicHolidays =
   [];
 
 
+let upcomingLeaves =
+  [];
+
+
+/* =========================================================
+   API STATE
+========================================================= */
+
 let currentSignature =
   "";
+
 
 let lastApiGeneratedAt =
   "";
 
+
+/* =========================================================
+   VIDEO PLAYLIST
+========================================================= */
 
 const signagePlaylist = [
 
@@ -1647,6 +1839,10 @@ signageVideo.addEventListener(
 );
 
 
+/* =========================================================
+   PERCENT HELPERS
+========================================================= */
+
 function clampPercent(
   value
 ) {
@@ -1661,6 +1857,10 @@ function clampPercent(
 
 }
 
+
+/* =========================================================
+   MONTH ELAPSED
+========================================================= */
 
 function getMonthElapsedPercent() {
 
@@ -1694,6 +1894,10 @@ function getMonthElapsedPercent() {
 
 }
 
+
+/* =========================================================
+   QUARTER ELAPSED
+========================================================= */
 
 function getQuarterElapsedPercent() {
 
@@ -1778,6 +1982,10 @@ function getQuarterElapsedPercent() {
 }
 
 
+/* =========================================================
+   FISCAL YEAR ELAPSED
+========================================================= */
+
 function getFiscalYearElapsedPercent() {
 
   const now =
@@ -1825,6 +2033,10 @@ function getFiscalYearElapsedPercent() {
 }
 
 
+/* =========================================================
+   TIME ELAPSED BY TARGET
+========================================================= */
+
 function getTimeElapsedPercent(
   label
 ) {
@@ -1832,21 +2044,32 @@ function getTimeElapsedPercent(
   switch (label) {
 
     case "Monthly Target":
+
       return getMonthElapsedPercent();
 
+
     case "Quarterly Target":
+
       return getQuarterElapsedPercent();
 
+
     case "Annual Target":
+
       return getFiscalYearElapsedPercent();
 
+
     default:
+
       return null;
 
   }
 
 }
 
+
+/* =========================================================
+   DOUBLE RING CHECK
+========================================================= */
 
 function usesDoubleRing(
   label
@@ -1860,6 +2083,10 @@ function usesDoubleRing(
 
 }
 
+
+/* =========================================================
+   SALES SCHEDULE STATUS
+========================================================= */
 
 function getScheduleStatus(
   progressPercent,
@@ -1876,11 +2103,15 @@ function getScheduleStatus(
   ) {
 
     return {
-      className: "ahead",
+
+      className:
+        "ahead",
+
       text:
         "Ahead by " +
         difference.toFixed(1) +
         "%"
+
     };
 
   }
@@ -1891,25 +2122,38 @@ function getScheduleStatus(
   ) {
 
     return {
-      className: "behind",
+
+      className:
+        "behind",
+
       text:
         "Behind by " +
         Math.abs(
           difference
         ).toFixed(1) +
         "%"
+
     };
 
   }
 
 
   return {
-    className: "ontrack",
-    text: "On track"
+
+    className:
+      "ontrack",
+
+    text:
+      "On track"
+
   };
 
 }
 
+
+/* =========================================================
+   RENDER SALES DASHBOARD
+========================================================= */
 
 function renderDashboard() {
 
@@ -1943,7 +2187,9 @@ function renderDashboard() {
 
 
       if (
-        usesDoubleRing(label)
+        usesDoubleRing(
+          label
+        )
       ) {
 
         const timePercent =
@@ -1992,22 +2238,28 @@ function renderDashboard() {
           <div class="ring-legend">
 
             <div class="legend-item">
+
               <span
                 class="legend-dot legend-time">
               </span>
 
               Time ${timePercent.toFixed(0)}%
+
             </div>
 
+
             <div class="legend-item">
+
               <span
                 class="legend-dot legend-progress">
               </span>
 
               Invoice ${pct.toFixed(0)}%
+
             </div>
 
           </div>
+
 
           <div
             class="schedule-status ${schedule.className}">
@@ -2054,6 +2306,10 @@ function renderDashboard() {
 }
 
 
+/* =========================================================
+   RENDER JOBS IN PROGRESS
+========================================================= */
+
 function renderJobsInProgress() {
 
   const totalElement =
@@ -2082,7 +2338,8 @@ function renderJobsInProgress() {
 
 
   totalElement.textContent =
-    totalJobsInProgress.toLocaleString();
+    totalJobsInProgress
+      .toLocaleString();
 
 
   jobsList.innerHTML =
@@ -2145,6 +2402,7 @@ function renderJobsInProgress() {
 
         </div>
 
+
         <div class="job-bar">
 
           <div
@@ -2166,6 +2424,10 @@ function renderJobsInProgress() {
 }
 
 
+/* =========================================================
+   RENDER ANNOUNCEMENTS
+========================================================= */
+
 function renderAnnouncements() {
 
   const list =
@@ -2179,11 +2441,14 @@ function renderAnnouncements() {
 
 
   if (
-    !Array.isArray(announcements) ||
+    !Array.isArray(
+      announcements
+    ) ||
     announcements.length === 0
   ) {
 
     list.innerHTML = `
+
       <div class="empty-message">
         No current announcements
       </div>
@@ -2195,7 +2460,10 @@ function renderAnnouncements() {
 
 
   announcements
-    .slice(0, 5)
+    .slice(
+      0,
+      5
+    )
     .forEach(
       text => {
 
@@ -2230,6 +2498,10 @@ function renderAnnouncements() {
 }
 
 
+/* =========================================================
+   HOLIDAY DATE PARSER
+========================================================= */
+
 function parseHolidayDate(
   dateText
 ) {
@@ -2262,9 +2534,13 @@ function parseHolidayDate(
 
 
   const parts =
-    String(dateText)
+    String(
+      dateText
+    )
       .trim()
-      .split(/\s+/);
+      .split(
+        /\s+/
+      );
 
 
   if (
@@ -2286,7 +2562,10 @@ function parseHolidayDate(
   const month =
     months[
       parts[1]
-        .substring(0, 3)
+        .substring(
+          0,
+          3
+        )
         .toLowerCase()
     ];
 
@@ -2299,9 +2578,13 @@ function parseHolidayDate(
 
 
   if (
-    Number.isNaN(day) ||
+    Number.isNaN(
+      day
+    ) ||
     month === undefined ||
-    Number.isNaN(year)
+    Number.isNaN(
+      year
+    )
   ) {
 
     return null;
@@ -2322,6 +2605,10 @@ function parseHolidayDate(
 }
 
 
+/* =========================================================
+   FORMAT HOLIDAY DATE
+========================================================= */
+
 function formatHolidayDate(
   date
 ) {
@@ -2329,14 +2616,25 @@ function formatHolidayDate(
   return date.toLocaleDateString(
     "en-AU",
     {
-      day: "numeric",
-      month: "short",
-      year: "numeric"
+
+      day:
+        "numeric",
+
+      month:
+        "short",
+
+      year:
+        "numeric"
+
     }
   );
 
 }
 
+
+/* =========================================================
+   RENDER PUBLIC HOLIDAYS
+========================================================= */
 
 function renderPublicHolidays() {
 
@@ -2410,6 +2708,7 @@ function renderPublicHolidays() {
   ) {
 
     list.innerHTML = `
+
       <div class="empty-message">
         No upcoming holidays
       </div>
@@ -2489,9 +2788,11 @@ function renderPublicHolidays() {
         <div class="holiday-date-wrap">
 
           <div class="holiday-date">
+
             ${formatHolidayDate(
               holiday.date
             )}
+
           </div>
 
           <div class="holiday-days">
@@ -2512,11 +2813,115 @@ function renderPublicHolidays() {
 }
 
 
+/* =========================================================
+   RENDER UPCOMING LEAVES
+========================================================= */
+
+function renderUpcomingLeaves() {
+
+  const list =
+    document.getElementById(
+      "leaveList"
+    );
+
+
+  list.innerHTML =
+    "";
+
+
+  if (
+    !Array.isArray(
+      upcomingLeaves
+    ) ||
+    upcomingLeaves.length === 0
+  ) {
+
+    list.innerHTML = `
+
+      <div class="empty-message">
+        No upcoming leaves
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  upcomingLeaves
+    .slice(
+      0,
+      5
+    )
+    .forEach(
+      leave => {
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "leave-item";
+
+
+        item.innerHTML = `
+
+          <div class="leave-name">
+            ${leave.name || ""}
+          </div>
+
+
+          <div class="leave-dates">
+
+            <span class="leave-start">
+
+              ${
+                leave.leaveStart
+                  ? "From " +
+                    leave.leaveStart
+                  : ""
+              }
+
+            </span>
+
+
+            <span class="leave-rtw">
+
+              ${
+                leave.returnToWork
+                  ? "RTW " +
+                    leave.returnToWork
+                  : ""
+              }
+
+            </span>
+
+          </div>
+        `;
+
+
+        list.appendChild(
+          item
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   DATA SIGNATURE
+========================================================= */
+
 function createDataSignature(
   salesDataset,
   jobsDataset,
   announcementDataset,
-  holidayDataset
+  holidayDataset,
+  leaveDataset
 ) {
 
   return JSON.stringify(
@@ -2532,7 +2937,10 @@ function createDataSignature(
         announcementDataset,
 
       holidays:
-        holidayDataset
+        holidayDataset,
+
+      leaves:
+        leaveDataset
 
     }
   );
@@ -2540,11 +2948,16 @@ function createDataSignature(
 }
 
 
+/* =========================================================
+   SAVE LAST KNOWN DATA
+========================================================= */
+
 function saveCurrentData(
   salesDataset,
   jobsDataset,
   announcementDataset,
   holidayDataset,
+  leaveDataset,
   generatedAt
 ) {
 
@@ -2568,6 +2981,9 @@ function saveCurrentData(
 
           publicHolidays:
             holidayDataset,
+
+          upcomingLeaves:
+            leaveDataset,
 
           generatedAt:
             generatedAt || "",
@@ -2595,6 +3011,10 @@ function saveCurrentData(
 
 }
 
+
+/* =========================================================
+   RESTORE LAST KNOWN DATA
+========================================================= */
 
 function restoreCurrentData() {
 
@@ -2679,12 +3099,25 @@ function restoreCurrentData() {
     }
 
 
+    if (
+      Array.isArray(
+        parsed.upcomingLeaves
+      )
+    ) {
+
+      upcomingLeaves =
+        parsed.upcomingLeaves;
+
+    }
+
+
     currentSignature =
       createDataSignature(
         data,
         jobsInProgress,
         announcements,
-        publicHolidays
+        publicHolidays,
+        upcomingLeaves
       );
 
 
@@ -2707,11 +3140,16 @@ function restoreCurrentData() {
 }
 
 
+/* =========================================================
+   APPLY NEW API DATA
+========================================================= */
+
 function applyData(
   newData,
   newJobs,
   newAnnouncements,
   newHolidays,
+  newLeaves,
   generatedAt
 ) {
 
@@ -2736,12 +3174,17 @@ function applyData(
     newHolidays;
 
 
+  upcomingLeaves =
+    newLeaves;
+
+
   currentSignature =
     createDataSignature(
       data,
       jobsInProgress,
       announcements,
-      publicHolidays
+      publicHolidays,
+      upcomingLeaves
     );
 
 
@@ -2754,6 +3197,7 @@ function applyData(
     jobsInProgress,
     announcements,
     publicHolidays,
+    upcomingLeaves,
     generatedAt
   );
 
@@ -2766,8 +3210,14 @@ function applyData(
 
   renderPublicHolidays();
 
+  renderUpcomingLeaves();
+
 }
 
+
+/* =========================================================
+   FETCH GOOGLE SHEETS API
+========================================================= */
 
 async function fetchSheetData() {
 
@@ -2781,8 +3231,13 @@ async function fetchSheetData() {
     await fetch(
       requestUrl,
       {
-        method: "GET",
-        cache: "no-store"
+
+        method:
+          "GET",
+
+        cache:
+          "no-store"
+
       }
     );
 
@@ -2820,7 +3275,8 @@ async function fetchSheetData() {
 
   if (
     !result.metrics ||
-    typeof result.metrics !== "object"
+    typeof result.metrics !==
+      "object"
   ) {
 
     throw new Error(
@@ -2829,6 +3285,10 @@ async function fetchSheetData() {
 
   }
 
+
+  /* =======================================================
+     SALES
+  ======================================================= */
 
   const newData =
     [];
@@ -2839,10 +3299,12 @@ async function fetchSheetData() {
   ) {
 
     if (
-      !Object.prototype.hasOwnProperty.call(
-        result.metrics,
-        name
-      )
+      !Object.prototype
+        .hasOwnProperty
+        .call(
+          result.metrics,
+          name
+        )
     ) {
 
       throw new Error(
@@ -2855,7 +3317,9 @@ async function fetchSheetData() {
 
     const value =
       Number(
-        result.metrics[name]
+        result.metrics[
+          name
+        ]
       );
 
 
@@ -2875,15 +3339,22 @@ async function fetchSheetData() {
 
     newData.push(
       [
+
         name,
+
         clampPercent(
           value
         )
+
       ]
     );
 
   }
 
+
+  /* =======================================================
+     JOBS
+  ======================================================= */
 
   const newJobs = {
 
@@ -2902,10 +3373,12 @@ async function fetchSheetData() {
       name => {
 
         if (
-          Object.prototype.hasOwnProperty.call(
-            result.jobsInProgress,
-            name
-          )
+          Object.prototype
+            .hasOwnProperty
+            .call(
+              result.jobsInProgress,
+              name
+            )
         ) {
 
           const value =
@@ -2922,7 +3395,9 @@ async function fetchSheetData() {
             )
           ) {
 
-            newJobs[name] =
+            newJobs[
+              name
+            ] =
               Math.max(
                 0,
                 Math.round(
@@ -2940,6 +3415,10 @@ async function fetchSheetData() {
   }
 
 
+  /* =======================================================
+     ANNOUNCEMENTS
+  ======================================================= */
+
   const newAnnouncements =
     Array.isArray(
       result.announcements
@@ -2948,12 +3427,28 @@ async function fetchSheetData() {
       : announcements;
 
 
+  /* =======================================================
+     HOLIDAYS
+  ======================================================= */
+
   const newHolidays =
     Array.isArray(
       result.publicHolidays
     )
       ? result.publicHolidays
       : publicHolidays;
+
+
+  /* =======================================================
+     UPCOMING LEAVES
+  ======================================================= */
+
+  const newLeaves =
+    Array.isArray(
+      result.upcomingLeaves
+    )
+      ? result.upcomingLeaves
+      : upcomingLeaves;
 
 
   return {
@@ -2970,6 +3465,9 @@ async function fetchSheetData() {
     holidays:
       newHolidays,
 
+    leaves:
+      newLeaves,
+
     generatedAt:
       result.generatedAt || ""
 
@@ -2977,6 +3475,10 @@ async function fetchSheetData() {
 
 }
 
+
+/* =========================================================
+   LOAD SHEET
+========================================================= */
 
 async function loadSheet() {
 
@@ -2997,7 +3499,8 @@ async function loadSheet() {
         apiResult.data,
         apiResult.jobs,
         apiResult.announcements,
-        apiResult.holidays
+        apiResult.holidays,
+        apiResult.leaves
       );
 
 
@@ -3011,6 +3514,7 @@ async function loadSheet() {
         apiResult.jobs,
         apiResult.announcements,
         apiResult.holidays,
+        apiResult.leaves,
         apiResult.generatedAt
       );
 
@@ -3060,6 +3564,10 @@ async function loadSheet() {
 }
 
 
+/* =========================================================
+   CLOCK
+========================================================= */
+
 function updateClock() {
 
   document
@@ -3075,6 +3583,10 @@ function updateClock() {
 
 }
 
+
+/* =========================================================
+   START DASHBOARD
+========================================================= */
 
 setInterval(
   updateClock,
@@ -3092,6 +3604,8 @@ renderJobsInProgress();
 renderAnnouncements();
 
 renderPublicHolidays();
+
+renderUpcomingLeaves();
 
 
 loadSheet();
